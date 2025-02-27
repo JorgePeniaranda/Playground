@@ -1,36 +1,17 @@
 /**
- * Check if the input is empty
- * @param {*} input 
- * @returns {boolean}
+ * Checks if a value is neither `null` nor `undefined`.
+ * @param value - The value to check.
+ * @returns `true` if the value is neither `null` nor `undefined`, otherwise `false`.
  */
-export function isEmpty(input: unknown): boolean {
-  if (input === undefined || input === null) {
-    return true;
-  }
-
-  if (typeof input === 'string') {
-    return input.trim() === '';
-  }
-
-  if (Array.isArray(input)) {
-    return input.length === 0;
-  }
-
-  if (typeof input === 'object') {
-    if (input instanceof Map || input instanceof Set) {
-      return input.size === 0;
-    }
-    return Object.keys(input).length === 0;
-  }
-
-  if (typeof input === 'boolean' || typeof input === 'function' || typeof input === 'symbol' || typeof input === 'bigint') {
-    return false;
-  }
-
-  if (typeof input === 'number') {
-    return Number.isNaN(input);
-  }
-
-  return false;
+export function isDefined<T>(value: T | undefined | null): value is T {
+  return value !== null;
 }
 
+/**
+ * Checks if a value is either `null` or `undefined`.
+ * @param value - The value to check.
+ * @returns `true` if the value is `null` or `undefined`, otherwise `false`.
+ */
+export function isNullOrUndefined<T>(value: T | undefined | null): value is undefined | null {
+  return value == null;
+}
