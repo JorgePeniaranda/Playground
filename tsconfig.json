@@ -8,7 +8,9 @@
     "outDir": "./out",
     "skipLibCheck": true,
     "strict": true,
-    "target": "ESNext"
+    "target": "ESNext",
+    "sourceMap": true,
+    "inlineSourceMap": false
   },
   "include": ["index.ts"],
   "exclude": ["node_modules", "out", "saves"]
