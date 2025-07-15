@@ -1,17 +1,32 @@
 {
   "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "customConditions": ["development"],
     "esModuleInterop": true,
-    "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
-    "removeComments": true,
-    "module": "commonjs",
     "outDir": "./out",
+    "experimentalDecorators": true,
+    "removeComments": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "ESNext",
+    "composite": true,
+    "isolatedModules": true,
+    "declaration": true,
+    "declarationMap": false,
+    "emitDeclarationOnly": false,
     "sourceMap": true,
-    "inlineSourceMap": false
+    "inlineSourceMap": false,
+    "noEmitOnError": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "importHelpers": true,
+    "resolveJsonModule": true
   },
-  "include": ["index.ts"],
+  "include": ["index.ts", "src/**/*.ts"],
   "exclude": ["node_modules", "out", "saves"]
 }
