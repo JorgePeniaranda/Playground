@@ -1,4 +1,3 @@
-// @ts-nocheck
 import 'dotenv/config'
 import express, { type Application } from 'express'
 
@@ -9,13 +8,13 @@ app.get('/', (_req, res) => {
   res.send(port)
 })
 
-export const findAvailablePort = async (server: Application, port: number): Promise<number> => {
-  return await new Promise((resolve, reject) => {
+function findAvailablePort(server: Application, port: number): Promise<number> {
+  return new Promise((resolve, reject) => {
     server.listen(port, () => {
       resolve(port)
     }).on('error', (error: any) => {
       if (error.code === 'EADDRINUSE') {
-        console.log(`Port: ${port} -> is already in use"`)
+        console.log(`Port: ${port} -> is already in use`)
         console.log(`Trying with port: ${port + 1}`)
         resolve(findAvailablePort(server, port + 1))
       }
