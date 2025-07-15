@@ -5,7 +5,7 @@ describe('main', () => {
 
   beforeEach(() => {
     // Espiar en console.log antes de cada prueba
-    consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+    consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => undefined);
   });
 
   afterEach(() => {
