@@ -7,7 +7,9 @@ Este es un proyecto de ejemplo con un entorno configurado para TypeScript, ESLin
 ## Requisitos
 
 - [Node.js](https://nodejs.org/en/download/package-manager)
-- Un runtime de JavaScript como [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm), [Bun](https://bun.sh/), [Yarn](https://yarnpkg.com/getting-started/install), o [PNPM](https://pnpm.io/installation).
+- Un runtime de JavaScript como
+  [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm), [Bun](https://bun.sh/),
+  [Yarn](https://yarnpkg.com/getting-started/install), o [PNPM](https://pnpm.io/installation).
 
 ## Instalación
 
@@ -65,7 +67,8 @@ Estos son los scripts disponibles en el proyecto:
   npm run start:dev
   ```
 
-- `dev`: Ejecuta `index.ts` usando `nodemon` y `ts-node` para reiniciar automáticamente en caso de cambios (modo desarrollo).
+- `dev`: Ejecuta `index.ts` usando `nodemon` y `ts-node` para reiniciar automáticamente en caso de
+  cambios (modo desarrollo).
 
   ```sh
   npm run dev
@@ -89,7 +92,8 @@ Estos son los scripts disponibles en el proyecto:
   npm run lint:fix
   ```
 
-- `ts:check`: Verifica errores de compilación en el proyecto TypeScript sin emitir archivos de salida.
+- `ts:check`: Verifica errores de compilación en el proyecto TypeScript sin emitir archivos de
+  salida.
 
   ```sh
   npm run ts:check

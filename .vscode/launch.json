@@ -16,10 +16,7 @@
       "restart": true,
       "outFiles": ["${workspaceFolder}/out/**/*.js"],
       "sourceMaps": true,
-      "resolveSourceMapLocations": [
-        "${workspaceFolder}/**",
-        "!**/node_modules/**"
-      ],
+      "resolveSourceMapLocations": ["${workspaceFolder}/**", "!**/node_modules/**"],
       "smartStep": true,
       "sourceMapPathOverrides": {
         "webpack:///./~/*": "${workspaceFolder}/node_modules/*",
