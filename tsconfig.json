@@ -24,7 +24,6 @@
     "noImplicitOverride": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
-    "importHelpers": true,
     "resolveJsonModule": true
   },
   "include": ["index.ts", "src/**/*.ts"],
