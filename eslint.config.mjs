@@ -88,17 +88,28 @@ export default [
           'warn',
           {
             'groups': [
-              'type',
               'builtin',
-              'object',
               'external',
               'internal',
               'parent',
               'sibling',
               'index',
+              'object',
+              'type',
             ],
-            'pathGroups': [{ pattern: '~/**', group: 'external', position: 'after' }],
-            'newlines-between': 'always',
+            'pathGroups': [
+              {
+                pattern: '~/**',
+                group: 'external',
+                position: 'after',
+              },
+            ],
+            'pathGroupsExcludedImportTypes': ['type'],
+            'alphabetize': {
+              order: 'asc',
+              caseInsensitive: true,
+            },
+            'newlines-between': 'always-and-inside-groups',
           },
         ],
       },
@@ -107,7 +118,7 @@ export default [
   //#endregion
 
   //#region 🔹 JSDoc configuration
-  jsdoc.configs['flat/recommended-typescript-error'],
+  jsdoc.configs['flat/recommended-typescript'],
   {
     files: ['**/*.ts', '**/*.tsx'],
     plugins: { jsdoc },
@@ -126,6 +137,7 @@ export default [
             FunctionDeclaration: true,
             MethodDefinition: true,
             ClassDeclaration: true,
+            ClassProperty: true,
           },
         },
       ],
