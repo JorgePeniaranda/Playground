@@ -7,7 +7,7 @@ import tseslint from 'typescript-eslint';
 export default [
   //#region 🔹 Ignore paths that should not be linted
   {
-    ignores: ['**/node_modules', 'node_modules/**/*', 'out/**/*', 'saves/**/*', 'coverage/**/*'],
+    ignores: ['**/node_modules', 'node_modules/**/*', 'out/**/*', 'coverage/**/*'],
   },
   //#endregion
 
@@ -25,6 +25,8 @@ export default [
             prev: ['const', 'let', 'var'],
             next: ['const', 'let', 'var'],
           },
+          { blankLine: 'always', prev: ['function'], next: '*' },
+          { blankLine: 'always', prev: '*', next: ['function'] },
         ],
         'no-console': 'warn',
         'prefer-const': 'error',
@@ -88,6 +90,7 @@ export default [
           'warn',
           {
             'groups': [
+              'unknown',
               'builtin',
               'external',
               'internal',
@@ -110,6 +113,7 @@ export default [
               caseInsensitive: true,
             },
             'newlines-between': 'always-and-inside-groups',
+            'distinctGroup': true,
           },
         ],
       },
