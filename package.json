@@ -18,23 +18,23 @@
     "test:coverage": "jest --coverage"
   },
   "devDependencies": {
-    "@babel/preset-env": "7.28.0",
-    "@babel/preset-typescript": "7.27.1",
-    "@eslint/js": "9.31.0",
+    "@babel/preset-env": "7.28.5",
+    "@babel/preset-typescript": "7.28.5",
+    "@eslint/js": "9.39.1",
     "@types/jest": "30.0.0",
-    "@types/node": "24.1.0",
-    "babel-jest": "30.0.4",
-    "eslint": "9.31.0",
-    "eslint-config-prettier": "10.1.5",
+    "@types/node": "24.10.1",
+    "babel-jest": "30.2.0",
+    "eslint": "9.39.1",
+    "eslint-config-prettier": "10.1.8",
     "eslint-plugin-import": "2.32.0",
-    "eslint-plugin-jsdoc": "51.4.0",
-    "eslint-plugin-prettier": "5.5.1",
-    "jest": "30.0.4",
-    "nodemon": "3.1.10",
+    "eslint-plugin-jsdoc": "61.2.1",
+    "eslint-plugin-prettier": "5.5.4",
+    "jest": "30.2.0",
+    "nodemon": "3.1.11",
     "prettier": "3.6.2",
-    "ts-jest": "29.4.0",
+    "ts-jest": "29.4.5",
     "ts-node": "10.9.2",
-    "typescript": "5.8.3",
-    "typescript-eslint": "8.37.0"
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.46.4"
   }
 }
