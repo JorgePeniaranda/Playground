@@ -1,18 +1,12 @@
 import eslint from '@eslint/js';
 import eslintPluginImport from 'eslint-plugin-import';
-import jsdoc from 'eslint-plugin-jsdoc';
 import eslintPluginPrettier from 'eslint-plugin-prettier/recommended';
+import { defineConfig, globalIgnores } from 'eslint/config';
 import tseslint from 'typescript-eslint';
 
-export default [
-  //#region 🔹 Ignore paths that should not be linted
-  {
-    ignores: ['**/node_modules', 'node_modules/**/*', 'out/**/*', 'coverage/**/*'],
-  },
-  //#endregion
-
+export default defineConfig(
   //#region 🔹 General ESLint rules
-  ...[
+  [
     eslint.configs.recommended,
     {
       rules: {
@@ -35,9 +29,8 @@ export default [
     },
   ],
   //#endregion
-
   //#region 🔹 TypeScript-specific ESLint rules
-  ...[
+  [
     ...tseslint.configs.strict,
     ...tseslint.configs.stylistic,
     {
@@ -47,9 +40,8 @@ export default [
     },
   ],
   //#endregion
-
   //#region 🔹 Prettier configuration
-  ...[
+  [
     eslintPluginPrettier,
     {
       rules: {
@@ -77,9 +69,8 @@ export default [
     },
   ],
   //#endregion
-
   //#region 🔹 Import management rules
-  ...[
+  [
     {
       files: ['**/*.{ts,tsx}'],
       plugins: {
@@ -120,32 +111,7 @@ export default [
     },
   ],
   //#endregion
-
-  //#region 🔹 JSDoc configuration
-  jsdoc.configs['flat/recommended-typescript'],
-  {
-    files: ['**/*.ts', '**/*.tsx'],
-    plugins: { jsdoc },
-    rules: {
-      'jsdoc/no-types': 'error',
-      'jsdoc/require-description': 'warn',
-      'jsdoc/check-alignment': 'warn',
-      'jsdoc/check-indentation': 'warn',
-      'jsdoc/check-line-alignment': 'warn',
-      'jsdoc/require-throws': 'error',
-      'jsdoc/require-jsdoc': [
-        'off',
-        {
-          publicOnly: true,
-          require: {
-            FunctionDeclaration: true,
-            MethodDefinition: true,
-            ClassDeclaration: true,
-            ClassProperty: true,
-          },
-        },
-      ],
-    },
-  },
+  //#region 🔹 Ignore paths that should not be linted
+  globalIgnores(['node_modules/', 'coverage/', 'out/', 'saves/']),
   //#endregion
-];
+);
