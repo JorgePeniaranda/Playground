@@ -1,31 +1,4 @@
 {
-  "compilerOptions": {
-    "target": "ES2022",
-    "lib": ["ES2022"],
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "customConditions": ["development"],
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "outDir": "./out",
-    "experimentalDecorators": true,
-    "removeComments": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "composite": true,
-    "isolatedModules": true,
-    "declaration": true,
-    "declarationMap": false,
-    "emitDeclarationOnly": false,
-    "sourceMap": true,
-    "inlineSourceMap": false,
-    "noEmitOnError": true,
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitOverride": true,
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "resolveJsonModule": true
-  },
-  "include": ["index.ts", "src/**/*.ts"],
-  "exclude": ["node_modules", "out", "saves"]
+  "files": [],
+  "references": [{ "path": "apps/ts-playground" }]
 }

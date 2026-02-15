@@ -1,5 +1,4 @@
 import { main as mainTs } from './index.ts';
-import { main as mainTsx } from './index.tsx';
 
 describe('main ts', () => {
   let consoleSpy: jest.SpyInstance;

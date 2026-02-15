@@ -1,6 +1,7 @@
 # Compiled source
 node_modules/
 out/
+dist/
 
 # Saved Code
 saves/

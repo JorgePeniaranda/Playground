@@ -1,6 +1,7 @@
 # Compiled source
 node_modules
 out
+dist
 
 # Lock files
 package-lock.json

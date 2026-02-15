@@ -1,73 +1,40 @@
 import eslint from '@eslint/js';
 import eslintPluginImport from 'eslint-plugin-import';
+import eslintPluginJsxA11y from 'eslint-plugin-jsx-a11y';
 import eslintPluginPrettier from 'eslint-plugin-prettier/recommended';
+import eslintPluginReact from 'eslint-plugin-react';
+import eslintPluginReactHooks from 'eslint-plugin-react-hooks';
+import eslintPluginReactRefresh from 'eslint-plugin-react-refresh';
 import { defineConfig, globalIgnores } from 'eslint/config';
+import globals from 'globals';
+import { fileURLToPath } from 'node:url';
 import tseslint from 'typescript-eslint';
+
+const tsconfigRootDir = fileURLToPath(new URL('.', import.meta.url));
+
+const sourceFiles = ['**/*.{ts,tsx,js,jsx}'];
 
 export default defineConfig(
   //#region 🔹 General ESLint rules
-  [
-    eslint.configs.recommended,
-    {
-      rules: {
-        'padding-line-between-statements': [
-          'warn',
-          { blankLine: 'always', prev: '*', next: ['return', 'export'] },
-          { blankLine: 'always', prev: ['const', 'let', 'var'], next: '*' },
-          {
-            blankLine: 'any',
-            prev: ['const', 'let', 'var'],
-            next: ['const', 'let', 'var'],
-          },
-          { blankLine: 'always', prev: ['function'], next: '*' },
-          { blankLine: 'always', prev: '*', next: ['function'] },
-        ],
-        'no-console': 'warn',
-        'prefer-const': 'error',
-        'no-var': 'error',
-      },
-    },
-  ],
+  ...[eslint.configs.recommended],
   //#endregion
   //#region 🔹 TypeScript-specific ESLint rules
-  [
+  ...[
     ...tseslint.configs.strict,
     ...tseslint.configs.stylistic,
     {
-      rules: {
-        '@typescript-eslint/no-extraneous-class': 'off',
+      files: ['**/*.ts', '**/*.tsx'],
+      languageOptions: {
+        parserOptions: {
+          projectService: true,
+          tsconfigRootDir,
+        },
       },
     },
   ],
   //#endregion
-  //#region 🔹 Prettier configuration
-  [
-    eslintPluginPrettier,
-    {
-      rules: {
-        'prettier/prettier': [
-          'warn',
-          // Same configuration as .prettierrc.mjs
-          {
-            printWidth: 100,
-            trailingComma: 'all',
-            tabWidth: 2,
-            semi: true,
-            singleQuote: true,
-            jsxSingleQuote: true,
-            bracketSpacing: true,
-            bracketSameLine: false,
-            arrowParens: 'always',
-            endOfLine: 'auto',
-            quoteProps: 'consistent',
-            proseWrap: 'always',
-            htmlWhitespaceSensitivity: 'css',
-            embeddedLanguageFormatting: 'auto',
-          },
-        ],
-      },
-    },
-  ],
+  //#region 🔹 Prettier configuration (reads from .prettierrc.mjs automatically)
+  [eslintPluginPrettier],
   //#endregion
   //#region 🔹 Import management rules
   [
@@ -111,7 +78,42 @@ export default defineConfig(
     },
   ],
   //#endregion
+  //#region 🔹 React-specific ESLint rules
+  ...[
+    {
+      files: sourceFiles,
+      languageOptions: {
+        parserOptions: { ecmaFeatures: { jsx: true } },
+        globals: { ...globals.browser },
+      },
+      plugins: {
+        'react': eslintPluginReact,
+        'react-hooks': eslintPluginReactHooks,
+        'react-refresh': eslintPluginReactRefresh,
+        'jsx-a11y': eslintPluginJsxA11y,
+      },
+      settings: { react: { version: 'detect' } },
+      rules: {
+        ...(eslintPluginReact.configs.recommended?.rules ?? {}),
+        ...(eslintPluginReact.configs['jsx-runtime']?.rules ?? {}),
+        ...(eslintPluginJsxA11y.configs.recommended?.rules ?? {}),
+        ...(eslintPluginReactHooks.configs.recommended?.rules ?? {}),
+        ...(eslintPluginReactRefresh.configs.recommended?.rules ?? {}),
+        'react/prop-types': 'off',
+      },
+    },
+  ],
+  //#endregion
   //#region 🔹 Ignore paths that should not be linted
-  globalIgnores(['node_modules/', 'coverage/', 'out/', 'saves/']),
+  globalIgnores([
+    'node_modules/',
+    'coverage/',
+    'out/',
+    'dist/',
+    'saves/',
+    'apps/*/out/',
+    'apps/*/dist/',
+    'apps/*/coverage/',
+  ]),
   //#endregion
 );
