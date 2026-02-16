@@ -1,118 +1,76 @@
 <h1 align="center">Playground</h1>
 
-## Descripción
+Monorepo con dos aplicaciones playground para experimentar con snippets de código.
 
-Este es un proyecto de ejemplo con un entorno configurado para TypeScript, ESLint y Nodemon.
+| App                  | Stack                          | Tests                            |
+| -------------------- | ------------------------------ | -------------------------------- |
+| **ts-playground**    | TypeScript, Node.js, ts-node   | Jest + ts-jest                   |
+| **react-playground** | React 19, Vite, TypeScript     | Vitest + @testing-library/react  |
 
 ## Requisitos
 
-- [Node.js](https://nodejs.org/en/download/package-manager)
-- Un runtime de JavaScript como
-  [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm), [Bun](https://bun.sh/),
-  [Yarn](https://yarnpkg.com/getting-started/install), o [PNPM](https://pnpm.io/installation).
+- [Node.js](https://nodejs.org/) (v18+)
+- Un package manager: [npm](https://docs.npmjs.com/), [Yarn](https://yarnpkg.com/),
+  [pnpm](https://pnpm.io/) o [Bun](https://bun.sh/)
 
-## Instalación
+## Instalacion
 
-1. Clona este repositorio:
+```sh
+git clone https://github.com/JorgePeniaranda/playground.git
+cd playground
+npm install
+```
 
-   ```sh
-   git clone https://github.com/JorgePeniaranda/playground.git
-   ```
+## Estructura
 
-2. Navega al directorio del proyecto:
+```
+apps/
+  ts-playground/        # TypeScript (Node.js) — Jest, ts-node, nodemon
+  react-playground/     # React (Vite) — Vitest, @testing-library/react
+saves/                  # Snippets archivados (excluidos de compilacion y linting)
+```
 
-   ```sh
-   cd playground
-   ```
-
-3. Instala las dependencias usando tu runtime de JavaScript preferido:
-
-   Con npm:
-
-   ```sh
-   npm install
-   ```
-
-   Con Yarn:
-
-   ```sh
-   yarn install
-   ```
-
-   Con PNPM:
-
-   ```sh
-   pnpm install
-   ```
-
-   Con Bun:
-
-   ```sh
-   bun install
-   ```
+La configuracion compartida vive en la raiz: ESLint (`eslint.config.mjs`), Prettier
+(`.prettierrc.mjs`), TypeScript base (`tsconfig.base.json`).
 
 ## Scripts
 
-Estos son los scripts disponibles en el proyecto:
+### Raiz (todos los workspaces)
 
-- `start`: Ejecuta el archivo compilado `index.js` desde la carpeta `out`.
+```sh
+npm run lint          # Ejecutar ESLint
+npm run lint:fix      # Ejecutar ESLint con auto-fix
+npm run format        # Formatear con Prettier
+npm run format:check  # Verificar formato
+npm run ts:check      # Verificar tipos en todos los workspaces
+npm test              # Ejecutar tests en todos los workspaces
+npm run build         # Compilar todos los workspaces
+```
 
-  ```sh
-  npm start
-  ```
+### ts-playground
 
-- `start:dev`: Ejecuta `index.ts` usando `ts-node` (modo desarrollo).
+```sh
+npm run dev -w ts-playground          # Dev con nodemon + ts-node (auto-reload)
+npm test -w ts-playground             # Ejecutar tests con Jest
+npm run test:watch -w ts-playground   # Tests en modo watch
+npx jest path/to/file.test.ts         # Ejecutar un test especifico
+npm run build -w ts-playground        # Compilar a apps/ts-playground/out/
+```
 
-  ```sh
-  npm run start:dev
-  ```
+### react-playground
 
-- `dev`: Ejecuta `index.ts` usando `nodemon` y `ts-node` para reiniciar automáticamente en caso de
-  cambios (modo desarrollo).
+```sh
+npm run dev -w react-playground          # Dev server con Vite
+npm test -w react-playground             # Ejecutar tests con Vitest
+npm run test:watch -w react-playground   # Tests en modo watch
+npx vitest run path/to/file.test.tsx     # Ejecutar un test especifico
+npm run build -w react-playground        # Build a apps/react-playground/dist/
+```
 
-  ```sh
-  npm run dev
-  ```
+## Tooling
 
-- `build`: Compila el proyecto TypeScript a JavaScript.
-
-  ```sh
-  npm run build
-  ```
-
-- `lint`: Ejecuta ESLint en el proyecto para encontrar y reportar problemas.
-
-  ```sh
-  npm run lint
-  ```
-
-- `lint:fix`: Ejecuta ESLint en el proyecto y automáticamente corrige problemas.
-
-  ```sh
-  npm run lint:fix
-  ```
-
-- `ts:check`: Verifica errores de compilación en el proyecto TypeScript sin emitir archivos de
-  salida.
-
-  ```sh
-  npm run ts:check
-  ```
-
-- `format`: Formatea todo el código usando Prettier.
-
-  ```sh
-  npm run format
-  ```
-
-- `format:check`: Verifica el formato del código usando Prettier.
-
-  ```sh
-  npm run format:check
-  ```
-
-- `test`: Comando por defecto para pruebas (actualmente no configurado).
-
-  ```sh
-  npm test
-  ```
+- **TypeScript** — ES2022, strict mode
+- **ESLint 9** — flat config con `typescript-eslint` (strict + stylistic), React, JSX a11y, Prettier
+- **Prettier** — 100 chars, single quotes, trailing commas, 2 espacios; plugins para organizar
+  imports y ordenar clases de Tailwind
+- **Dependencias** — versiones exactas (`save-exact=true` en `.npmrc`), lock files en `.gitignore`

@@ -33,12 +33,14 @@ base (`tsconfig.base.json`).
 
 - **Dev:** `npm run dev -w ts-playground` (nodemon + ts-node)
 - **Test:** `npm test -w ts-playground` / `npx jest path/to/file.test.ts`
+- **Test watch:** `npm run test:watch -w ts-playground`
 - **Build:** `npm run build -w ts-playground` (compiles to `apps/ts-playground/out/`)
 
 ### react-playground
 
 - **Dev:** `npm run dev -w react-playground` (Vite dev server)
-- **Test:** `npm test -w react-playground`
+- **Test:** `npm test -w react-playground` / `npx vitest run path/to/file.test.tsx`
+- **Test watch:** `npm run test:watch -w react-playground`
 - **Build:** `npm run build -w react-playground` (outputs to `apps/react-playground/dist/`)
 
 ## Architecture
@@ -48,8 +50,8 @@ base (`tsconfig.base.json`).
 - **react-playground:** Vite + React 19, `bundler` module resolution, Vitest + jsdom
 - **ESLint 9** flat config with `typescript-eslint` strict + stylistic, Prettier integration, and
   import ordering
-- **Prettier** config in `.prettierrc.mjs`: 100 char width, single quotes, trailing commas, 2-space
-  tabs
+- **Prettier** config in `.prettierrc.mjs`: 100 char width, single quotes (including JSX), trailing
+  commas, 2-space indent; includes `prettier-plugin-tailwindcss` for class sorting
 
 ## Code Style
 
