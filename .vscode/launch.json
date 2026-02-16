@@ -6,7 +6,8 @@
       "type": "node",
       "request": "launch",
       "runtimeExecutable": "npx",
-      "runtimeArgs": ["nodemon"],
+      "runtimeArgs": ["nodemon", "--exec", "node --require ts-node/register --inspect"],
+      "args": ["index.ts"],
       "cwd": "${workspaceFolder}/apps/ts-playground",
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
@@ -16,7 +17,6 @@
       },
       "restart": true,
       "sourceMaps": true,
-      "outFiles": ["${workspaceFolder}/apps/ts-playground/out/**/*.js"],
       "resolveSourceMapLocations": [
         "${workspaceFolder}/apps/ts-playground/**",
         "!**/node_modules/**"
@@ -27,8 +27,8 @@
       "name": "ts-playground: Run Once",
       "type": "node",
       "request": "launch",
-      "runtimeExecutable": "npx",
-      "runtimeArgs": ["ts-node", "index.ts"],
+      "runtimeArgs": ["--require", "ts-node/register"],
+      "args": ["${workspaceFolder}/apps/ts-playground/index.ts"],
       "cwd": "${workspaceFolder}/apps/ts-playground",
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
@@ -37,40 +37,53 @@
         "TS_NODE_PROJECT": "${workspaceFolder}/apps/ts-playground/tsconfig.json"
       },
       "sourceMaps": true,
-      "autoAttachChildProcesses": true
+      "resolveSourceMapLocations": [
+        "${workspaceFolder}/apps/ts-playground/**",
+        "!**/node_modules/**"
+      ]
     },
     {
       "name": "ts-playground: Jest (current file)",
       "type": "node",
       "request": "launch",
       "runtimeExecutable": "npx",
-      "runtimeArgs": ["jest", "--runInBand", "${relativeFile}"],
+      "runtimeArgs": ["jest", "--runInBand", "--no-cache", "${relativeFile}"],
       "cwd": "${workspaceFolder}/apps/ts-playground",
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
-      "skipFiles": ["<node_internals>/**"]
+      "skipFiles": ["<node_internals>/**"],
+      "sourceMaps": true,
+      "resolveSourceMapLocations": [
+        "${workspaceFolder}/apps/ts-playground/**",
+        "!**/node_modules/**"
+      ]
     },
     {
       "name": "react-playground: Dev (Vite)",
-      "type": "node",
+      "type": "chrome",
       "request": "launch",
-      "runtimeExecutable": "npx",
-      "runtimeArgs": ["vite"],
-      "cwd": "${workspaceFolder}/apps/react-playground",
-      "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen",
-      "skipFiles": ["<node_internals>/**"]
+      "url": "http://localhost:5173",
+      "webRoot": "${workspaceFolder}/apps/react-playground/src",
+      "sourceMapPathOverrides": {
+        "webpack:///src/*": "${webRoot}/*"
+      },
+      "preLaunchTask": "react-playground: start vite"
     },
     {
       "name": "react-playground: Vitest (current file)",
       "type": "node",
       "request": "launch",
       "runtimeExecutable": "npx",
-      "runtimeArgs": ["vitest", "run", "${relativeFile}"],
+      "runtimeArgs": ["vitest", "run", "--no-file-parallelism", "${relativeFile}"],
       "cwd": "${workspaceFolder}/apps/react-playground",
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
-      "skipFiles": ["<node_internals>/**"]
+      "skipFiles": ["<node_internals>/**"],
+      "sourceMaps": true,
+      "resolveSourceMapLocations": [
+        "${workspaceFolder}/apps/react-playground/**",
+        "!**/node_modules/**"
+      ]
     }
   ]
 }
