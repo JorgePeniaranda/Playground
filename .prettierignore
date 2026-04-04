@@ -1,10 +1,16 @@
-# Compiled source
-node_modules/
-out/
+# Build output
 dist/
-
-# Saved Code
-saves/
-
-# test coverage
+out/
 coverage/
+.tsbuild/
+*.tsbuildinfo
+
+# Tool caches
+.eslintcache
+.cache/
+.vite/
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
+
+# Local-only data
+saves/

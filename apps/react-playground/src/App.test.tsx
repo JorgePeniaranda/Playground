@@ -10,6 +10,6 @@ describe('App', () => {
 
   test('renders Hello World heading', () => {
     render(<App />);
-    expect(screen.getByText('Hello World!')).toBeInTheDocument();
+    expect(screen.getByText('Hello World!')).toBeDefined();
   });
 });

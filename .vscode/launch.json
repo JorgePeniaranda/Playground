@@ -24,66 +24,19 @@
       "autoAttachChildProcesses": true
     },
     {
-      "name": "ts-playground: Run Once",
-      "type": "node",
-      "request": "launch",
-      "runtimeArgs": ["--require", "ts-node/register"],
-      "args": ["${workspaceFolder}/apps/ts-playground/index.ts"],
-      "cwd": "${workspaceFolder}/apps/ts-playground",
-      "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen",
-      "skipFiles": ["<node_internals>/**"],
-      "env": {
-        "TS_NODE_PROJECT": "${workspaceFolder}/apps/ts-playground/tsconfig.json"
-      },
-      "sourceMaps": true,
-      "resolveSourceMapLocations": [
-        "${workspaceFolder}/apps/ts-playground/**",
-        "!**/node_modules/**"
-      ]
-    },
-    {
-      "name": "ts-playground: Jest (current file)",
-      "type": "node",
-      "request": "launch",
-      "runtimeExecutable": "npx",
-      "runtimeArgs": ["jest", "--runInBand", "--no-cache", "${relativeFile}"],
-      "cwd": "${workspaceFolder}/apps/ts-playground",
-      "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen",
-      "skipFiles": ["<node_internals>/**"],
-      "sourceMaps": true,
-      "resolveSourceMapLocations": [
-        "${workspaceFolder}/apps/ts-playground/**",
-        "!**/node_modules/**"
-      ]
-    },
-    {
-      "name": "react-playground: Dev (Vite)",
+      "name": "react-playground: Dev + Debug",
       "type": "chrome",
       "request": "launch",
+      "preLaunchTask": "react-playground: vite dev",
       "url": "http://localhost:5173",
-      "webRoot": "${workspaceFolder}/apps/react-playground/src",
-      "sourceMapPathOverrides": {
-        "webpack:///src/*": "${webRoot}/*"
-      },
-      "preLaunchTask": "react-playground: start vite"
-    },
-    {
-      "name": "react-playground: Vitest (current file)",
-      "type": "node",
-      "request": "launch",
-      "runtimeExecutable": "npx",
-      "runtimeArgs": ["vitest", "run", "--no-file-parallelism", "${relativeFile}"],
-      "cwd": "${workspaceFolder}/apps/react-playground",
-      "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen",
-      "skipFiles": ["<node_internals>/**"],
+      "webRoot": "${workspaceFolder}/apps/react-playground",
       "sourceMaps": true,
-      "resolveSourceMapLocations": [
-        "${workspaceFolder}/apps/react-playground/**",
-        "!**/node_modules/**"
-      ]
+      "sourceMapPathOverrides": {
+        "/src/*": "${workspaceFolder}/apps/react-playground/src/*",
+        "/*": "${workspaceFolder}/apps/react-playground/*",
+        "/@fs/*": "*"
+      },
+      "skipFiles": ["<node_internals>/**"]
     }
   ]
 }

@@ -5,10 +5,19 @@
     "module": "ESNext",
     "moduleResolution": "bundler",
     "jsx": "react-jsx",
-    "noEmit": true,
-    "declaration": false,
-    "types": ["vitest/globals", "@testing-library/jest-dom"]
+    "composite": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "outDir": "./.tsbuild"
   },
-  "include": ["src", "vite-env.d.ts", "vitest.setup.ts"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["src", "vite-env.d.ts", "vitest.setup.ts", "vite.config.ts", "vitest.config.ts"],
+  "exclude": [
+    "node_modules",
+    ".tsbuild",
+    "dist",
+    "src/**/*.test.ts",
+    "src/**/*.test.tsx",
+    "src/**/*.spec.ts",
+    "src/**/*.spec.tsx"
+  ]
 }

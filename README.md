@@ -1,76 +1,79 @@
-<h1 align="center">Playground</h1>
+# Playground
 
-Monorepo con dos aplicaciones playground para experimentar con snippets de código.
+Monorepo pequeño para experimentar con código en workspaces de apps y paquetes compartidos:
 
-| App                  | Stack                          | Tests                            |
-| -------------------- | ------------------------------ | -------------------------------- |
-| **ts-playground**    | TypeScript, Node.js, ts-node   | Jest + ts-jest                   |
-| **react-playground** | React 19, Vite, TypeScript     | Vitest + @testing-library/react  |
+- `react-playground`: React + Vite + TypeScript
+- `ts-playground`: TypeScript orientado a Node.js
+- `@playground/utils`: utilidades TypeScript compartidas
 
 ## Requisitos
 
-- [Node.js](https://nodejs.org/) (v18+)
-- Un package manager: [npm](https://docs.npmjs.com/), [Yarn](https://yarnpkg.com/),
-  [pnpm](https://pnpm.io/) o [Bun](https://bun.sh/)
+- Node.js `20.19.0` o superior
+- npm `10` o superior
 
 ## Instalacion
 
 ```sh
-git clone https://github.com/JorgePeniaranda/playground.git
-cd playground
 npm install
 ```
 
 ## Estructura
 
-```
+```text
 apps/
-  ts-playground/        # TypeScript (Node.js) — Jest, ts-node, nodemon
-  react-playground/     # React (Vite) — Vitest, @testing-library/react
-saves/                  # Snippets archivados (excluidos de compilacion y linting)
+  react-playground/
+  ts-playground/
+packages/
+  utils/
+configs/
+  eslint/
+docs/
+scripts/
 ```
 
-La configuracion compartida vive en la raiz: ESLint (`eslint.config.mjs`), Prettier
-(`.prettierrc.mjs`), TypeScript base (`tsconfig.base.json`).
+## Uso Diario
 
-## Scripts
-
-### Raiz (todos los workspaces)
+Los comandos raiz usan un runner interactivo para elegir workspace cuando aplica.
 
 ```sh
-npm run lint          # Ejecutar ESLint
-npm run lint:fix      # Ejecutar ESLint con auto-fix
-npm run format        # Formatear con Prettier
-npm run format:check  # Verificar formato
-npm run ts:check      # Verificar tipos en todos los workspaces
-npm test              # Ejecutar tests en todos los workspaces
-npm run build         # Compilar todos los workspaces
+npm run dev
+npm run build
+npm run lint
+npm run typecheck
+npm run test
+npm run check
 ```
 
-### ts-playground
+Tambien puedes evitar el prompt:
 
 ```sh
-npm run dev -w ts-playground          # Dev con nodemon + ts-node (auto-reload)
-npm test -w ts-playground             # Ejecutar tests con Jest
-npm run test:watch -w ts-playground   # Tests en modo watch
-npx jest path/to/file.test.ts         # Ejecutar un test especifico
-npm run build -w ts-playground        # Compilar a apps/ts-playground/out/
+npm run dev:react
+npm run dev:ts
+npm run dev:utils
+npm run build:react
+npm run build:ts
+npm run build:utils
+npm run test:react
+npm run test:ts
+npm run test:utils
+npm run check:all
 ```
 
-### react-playground
+Los comandos interactivos del root siguen apuntando a los apps. Para el paquete compartido usa los
+aliases `:*utils` o `npm run <script> -w @playground/utils`.
+
+Si necesitas correr el runner con flags:
 
 ```sh
-npm run dev -w react-playground          # Dev server con Vite
-npm test -w react-playground             # Ejecutar tests con Vitest
-npm run test:watch -w react-playground   # Tests en modo watch
-npx vitest run path/to/file.test.tsx     # Ejecutar un test especifico
-npm run build -w react-playground        # Build a apps/react-playground/dist/
+npm run test -- --workspace react
+npm run check -- --workspace ts
+npm run build -- --all
+npm run dev -- --help
 ```
 
-## Tooling
+## Documentacion
 
-- **TypeScript** — ES2022, strict mode
-- **ESLint 9** — flat config con `typescript-eslint` (strict + stylistic), React, JSX a11y, Prettier
-- **Prettier** — 100 chars, single quotes, trailing commas, 2 espacios; plugins para organizar
-  imports y ordenar clases de Tailwind
-- **Dependencias** — versiones exactas (`save-exact=true` en `.npmrc`), lock files en `.gitignore`
+- Arquitectura y layout del monorepo:
+  [docs/architecture.md](/C:/Users/USUARIO/Documents/Proyectos/Playground/docs/architecture.md)
+- Stack y tooling actual:
+  [docs/stack.md](/C:/Users/USUARIO/Documents/Proyectos/Playground/docs/stack.md)

@@ -1,45 +1,25 @@
-import { main as mainTs } from './index.ts';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+
+import { main } from './index';
 
 describe('main ts', () => {
-  let consoleSpy: jest.SpyInstance;
+  let consoleSpy: ReturnType<typeof vi.spyOn>;
 
   beforeEach(() => {
-    consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => undefined);
+    consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => undefined);
   });
 
   afterEach(() => {
     consoleSpy.mockRestore();
   });
 
-  test('should print "Hello World!" to the console', () => {
-    mainTs();
+  it('should print "Hello World!" to the console', () => {
+    main();
     expect(consoleSpy).toHaveBeenCalledWith('Hello World!');
   });
 
-  test('should call console.log once', () => {
-    mainTs();
-    expect(consoleSpy).toHaveBeenCalledTimes(1);
-  });
-});
-
-describe('main tsx', () => {
-  let consoleSpy: jest.SpyInstance;
-
-  beforeEach(() => {
-    consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => undefined);
-  });
-
-  afterEach(() => {
-    consoleSpy.mockRestore();
-  });
-
-  test('should print "Hello World!" to the console', () => {
-    mainTsx();
-    expect(consoleSpy).toHaveBeenCalledWith('Hello World!');
-  });
-
-  test('should call console.log once', () => {
-    mainTsx();
+  it('should call console.log once', () => {
+    main();
     expect(consoleSpy).toHaveBeenCalledTimes(1);
   });
 });

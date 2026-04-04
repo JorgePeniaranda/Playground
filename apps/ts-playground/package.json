@@ -2,24 +2,30 @@
   "name": "ts-playground",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "start": "node ./out/index.js",
-    "start:dev": "ts-node index.ts",
     "dev": "nodemon",
     "build": "tsc",
-    "ts:check": "tsc --noEmit",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "start": "node ./out/index.js",
+    "start:dev": "node --loader ts-node/esm index.ts",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --ignore-path ../../.prettierignore --write .",
+    "format:check": "prettier --ignore-path ../../.prettierignore --check .",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.test.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "check": "npm run lint && npm run format:check && npm run typecheck && npm run test"
+  },
+  "dependencies": {
+    "@playground/utils": "0.0.0"
   },
   "devDependencies": {
-    "@babel/preset-env": "7.28.5",
-    "@babel/preset-typescript": "7.28.5",
-    "@types/jest": "30.0.0",
-    "@types/node": "24.10.1",
-    "babel-jest": "30.2.0",
-    "nodemon": "3.1.11",
-    "ts-jest": "29.4.5",
-    "ts-node": "10.9.2"
+    "@types/node": "25.5.2",
+    "@vitest/coverage-v8": "4.1.2",
+    "nodemon": "3.1.14",
+    "ts-node": "10.9.2",
+    "vitest": "4.1.2"
   }
 }

@@ -1,4 +1,8 @@
 {
   "files": [],
-  "references": [{ "path": "apps/ts-playground" }]
+  "references": [
+    { "path": "packages/utils" },
+    { "path": "apps/react-playground" },
+    { "path": "apps/ts-playground" }
+  ]
 }
