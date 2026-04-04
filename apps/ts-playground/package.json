@@ -3,6 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "playgroundConfig": {
+    "id": "ts",
+    "label": "TypeScript Playground"
+  },
   "scripts": {
     "dev": "nodemon",
     "build": "tsc",

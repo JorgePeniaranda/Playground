@@ -59,6 +59,9 @@ npm run check:all
 Los comandos interactivos del root siguen apuntando a los apps. Para el paquete compartido usa los
 aliases `:*utils` o `npm run <script> -w @playground/utils`.
 
+Los workspaces del runner se descubren automaticamente desde `apps/*/package.json` usando la
+metadata `playgroundConfig.id` y `playgroundConfig.label`.
+
 Scripts utiles para paquetes compartidos:
 
 ```sh

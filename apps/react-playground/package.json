@@ -3,6 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "playgroundConfig": {
+    "id": "react",
+    "label": "React Playground"
+  },
   "scripts": {
     "dev": "vite",
     "build": "npm run typecheck && vite build",

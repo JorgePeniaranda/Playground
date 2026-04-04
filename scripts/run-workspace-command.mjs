@@ -3,13 +3,22 @@
 import path from 'node:path';
 import { stdin as input, stdout as output, stderr } from 'node:process';
 import { clearScreenDown, moveCursor } from 'node:readline';
-import { readJsonFile, repositoryRoot, runNpmCommand } from './workspace-utils.mjs';
+import {
+  readAppWorkspaceCatalog,
+  readJsonFile,
+  repositoryRoot,
+  runNpmCommand,
+} from './workspace-utils.mjs';
 
 /**
  * @typedef {Object} WorkspaceEntry
  * @property {string} id
  * @property {string} label
  * @property {string} workspace
+ */
+
+/**
+ * @typedef {{ label: string, selection: WorkspaceSelection }} PromptOption
  */
 
 /**
@@ -23,12 +32,6 @@ import { readJsonFile, repositoryRoot, runNpmCommand } from './workspace-utils.m
 /**
  * @typedef {{ type: 'all' } | { type: 'workspace', workspace: WorkspaceEntry }} WorkspaceSelection
  */
-
-/** @type {WorkspaceEntry[]} */
-const workspaceCatalog = [
-  { id: 'ts', label: 'TypeScript Playground', workspace: 'ts-playground' },
-  { id: 'react', label: 'React Playground', workspace: 'react-playground' },
-];
 
 const supportedCommands = new Set([
   'dev',
@@ -46,20 +49,18 @@ const supportedCommands = new Set([
 
 const commandsDisallowingAll = new Set(['dev', 'test:watch']);
 
-const workspaceById = new Map(
-  workspaceCatalog.flatMap((entry) => [
-    [entry.id, entry],
-    [entry.workspace, entry],
-  ]),
-);
+/**
+ * @param {WorkspaceEntry[]} workspaceCatalog
+ */
+function printHelp(workspaceCatalog) {
+  const workspaceNames = workspaceCatalog.map((entry) => entry.id).join('|');
 
-function printHelp() {
   output.write(`Usage:
-  npm run <command> [-- --workspace <react|ts>]
-  npm run <command> [-- <react|ts>]
+  npm run <command> [-- --workspace <${workspaceNames}>]
+  npm run <command> [-- <${workspaceNames}>]
   npm run <command> -- --all
   npm run <command> -- --help
-  npm run <command> -- <react|ts> -- [script arguments...]
+  npm run <command> -- <${workspaceNames}> -- [script arguments...]
 
 Commands supported by the workspace runner:
   ${Array.from(supportedCommands).join(', ')}
@@ -72,10 +73,10 @@ Options:
 
 Examples:
   npm run dev
-  npm run dev -- react
-  npm run test -- --workspace ts
+  npm run dev -- ${workspaceCatalog[0]?.id ?? 'workspace-id'}
+  npm run test -- --workspace ${workspaceCatalog[0]?.id ?? 'workspace-id'}
   npm run check -- --all
-  npm run test -- react -- --runInBand
+  npm run lint -- ${workspaceCatalog[0]?.id ?? 'workspace-id'} -- --max-warnings 0
 `);
 }
 
@@ -85,6 +86,19 @@ Examples:
  */
 function supportsAllWorkspaces(command) {
   return !commandsDisallowingAll.has(command);
+}
+
+/**
+ * @param {WorkspaceEntry[]} workspaceCatalog
+ * @returns {Map<string, WorkspaceEntry>}
+ */
+function createWorkspaceLookup(workspaceCatalog) {
+  return new Map(
+    workspaceCatalog.flatMap((entry) => [
+      [entry.id.toLowerCase(), entry],
+      [entry.workspace.toLowerCase(), entry],
+    ]),
+  );
 }
 
 /**
@@ -193,10 +207,11 @@ function parseArgs(argv) {
 }
 
 /**
+ * @param {Map<string, WorkspaceEntry>} workspaceById
  * @param {string | undefined} value
  * @returns {WorkspaceEntry | undefined}
  */
-function resolveWorkspace(value) {
+function resolveWorkspace(workspaceById, value) {
   if (!value) {
     return undefined;
   }
@@ -206,15 +221,17 @@ function resolveWorkspace(value) {
 
 /**
  * @param {string} command
+ * @param {WorkspaceEntry[]} workspaceCatalog
  * @returns {Promise<WorkspaceSelection>}
  */
-async function promptForWorkspace(command) {
+async function promptForWorkspace(command, workspaceCatalog) {
   if (!input.isTTY || !output.isTTY || typeof input.setRawMode !== 'function') {
     throw new Error('Interactive workspace selection requires a TTY. Use --workspace or --all.');
   }
 
+  /** @type {PromptOption[]} */
   const workspaceOptions = workspaceCatalog.map((entry) => {
-    /** @type {{ label: string, selection: WorkspaceSelection }} */
+    /** @type {PromptOption} */
     const option = {
       label: `${entry.label} (${entry.id})`,
       selection: { type: 'workspace', workspace: entry },
@@ -223,7 +240,7 @@ async function promptForWorkspace(command) {
     return option;
   });
 
-  /** @type {{ label: string, selection: WorkspaceSelection }} */
+  /** @type {PromptOption} */
   const allOption = {
     label: 'All workspaces',
     selection: { type: 'all' },
@@ -344,6 +361,8 @@ function createSingleWorkspaceArgs(command, workspace, forwardedArgs) {
 
 async function main() {
   const command = process.argv[2];
+  const workspaceCatalog = await readAppWorkspaceCatalog('apps');
+  const workspaceById = createWorkspaceLookup(workspaceCatalog);
 
   if (!command || !supportedCommands.has(command)) {
     stderr.write(
@@ -360,13 +379,13 @@ async function main() {
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     stderr.write(`${message}\n\n`);
-    printHelp();
+    printHelp(workspaceCatalog);
     process.exitCode = 1;
     return;
   }
 
   if (parsedArgs.help) {
-    printHelp();
+    printHelp(workspaceCatalog);
     return;
   }
 
@@ -391,11 +410,11 @@ async function main() {
   }
 
   if (parsedArgs.workspace) {
-    const selectedWorkspace = resolveWorkspace(parsedArgs.workspace);
+    const selectedWorkspace = resolveWorkspace(workspaceById, parsedArgs.workspace);
 
     if (!selectedWorkspace) {
       stderr.write(`Unknown workspace: ${parsedArgs.workspace}\n\n`);
-      printHelp();
+      printHelp(workspaceCatalog);
       process.exitCode = 1;
       return;
     }
@@ -410,7 +429,7 @@ async function main() {
     return;
   }
 
-  const selection = await promptForWorkspace(command);
+  const selection = await promptForWorkspace(command, workspaceCatalog);
 
   if (selection.type === 'all') {
     if (!supportsAllWorkspaces(command)) {

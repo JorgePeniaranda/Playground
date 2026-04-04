@@ -14,6 +14,16 @@ const npmExecutable = process.platform === 'win32' ? 'npm.cmd' : 'npm';
  */
 
 /**
+ * @typedef {{
+ *   id: string,
+ *   label: string,
+ *   workspace: string,
+ *   directory: string,
+ *   manifestPath: string,
+ * }} AppWorkspaceEntry
+ */
+
+/**
  * @param {string} manifestPath
  * @returns {Promise<Record<string, unknown>>}
  */
@@ -60,6 +70,47 @@ export async function readWorkspaceManifests(relativeDirectory) {
 }
 
 /**
+ * @param {string} relativeDirectory
+ * @returns {Promise<AppWorkspaceEntry[]>}
+ */
+export async function readAppWorkspaceCatalog(relativeDirectory) {
+  const manifests = await readWorkspaceManifests(relativeDirectory);
+
+  const catalog = manifests.map(async (workspaceManifest) => {
+    const manifest = await readJsonFile(workspaceManifest.manifestPath);
+    const playgroundConfig = /** @type {{ id?: unknown, label?: unknown } | undefined} */ (
+      manifest.playgroundConfig
+    );
+
+    if (!playgroundConfig || typeof playgroundConfig !== 'object') {
+      throw new Error(`Missing "playgroundConfig" metadata in ${workspaceManifest.manifestPath}.`);
+    }
+
+    const { id, label } = playgroundConfig;
+
+    if (!id || typeof id !== 'string') {
+      throw new Error(`Missing "playgroundConfig.id" in ${workspaceManifest.manifestPath}.`);
+    }
+
+    if (!label || typeof label !== 'string') {
+      throw new Error(`Missing "playgroundConfig.label" in ${workspaceManifest.manifestPath}.`);
+    }
+
+    return {
+      id,
+      label,
+      workspace: workspaceManifest.name,
+      directory: workspaceManifest.directory,
+      manifestPath: workspaceManifest.manifestPath,
+    };
+  });
+
+  const entries = await Promise.all(catalog);
+
+  return entries.sort((left, right) => left.label.localeCompare(right.label));
+}
+
+/**
  * @param {string} command
  * @param {string[]} args
  * @param {{ cwd?: string, stdout?: NodeJS.WritableStream }} [options]
@@ -69,25 +120,30 @@ export function runCommand(command, args, options = {}) {
   const { cwd = repositoryRoot, stdout = process.stdout } = options;
 
   return new Promise((resolve, reject) => {
-    const child = spawn(command, args, {
-      cwd,
-      stdio: 'inherit',
-      shell: process.platform === 'win32',
-    });
+    const child = /** @type {import('node:child_process').ChildProcess} */ (
+      spawn(command, args, {
+        cwd,
+        stdio: 'inherit',
+        shell: process.platform === 'win32',
+      })
+    );
 
     if (stdout) {
       stdout.write(`Running: ${formatCommandPreview(command, args)}\n\n`);
     }
 
     child.on('error', reject);
-    child.on('close', (code) => {
-      if (code === 0) {
-        resolve();
-        return;
-      }
+    child.on(
+      'close',
+      /** @param {number | null} code */ (code) => {
+        if (code === 0) {
+          resolve();
+          return;
+        }
 
-      reject(new Error(`Command failed with exit code ${code ?? 1}`));
-    });
+        reject(new Error(`Command failed with exit code ${code ?? 1}`));
+      },
+    );
   });
 }
 

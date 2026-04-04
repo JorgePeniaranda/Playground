@@ -40,6 +40,8 @@ The interactive workspace runner is intended to:
 - allow bypass with `--workspace`
 - support `--help`
 - support `--all` where the command allows it
+- discover app workspaces from `apps/*/package.json` instead of relying on a hardcoded list
+  using repo-specific `playgroundConfig` metadata
 
 `build-packages.mjs` is separate from the interactive runner. It discovers workspaces under
 `packages/` and builds them without a prompt.
