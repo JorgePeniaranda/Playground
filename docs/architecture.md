@@ -1,6 +1,7 @@
 # Architecture
 
-This repo is a small monorepo used as a playground/template for code experiments.
+This repository is a small monorepo for experiments, comparisons and reusable setup across
+multiple frontend and TypeScript workspaces.
 
 ## Layout
 
@@ -11,60 +12,60 @@ Primary directories:
 - [../apps/ts-playground](/C:/Users/USUARIO/Documents/Proyectos/Playground/apps/ts-playground)
 - [../packages/utils](/C:/Users/USUARIO/Documents/Proyectos/Playground/packages/utils)
 - [../configs/eslint](/C:/Users/USUARIO/Documents/Proyectos/Playground/configs/eslint)
+- [../configs/vitest](/C:/Users/USUARIO/Documents/Proyectos/Playground/configs/vitest)
 - [../scripts](/C:/Users/USUARIO/Documents/Proyectos/Playground/scripts)
 - [../docs](/C:/Users/USUARIO/Documents/Proyectos/Playground/docs)
 - [../.vscode](/C:/Users/USUARIO/Documents/Proyectos/Playground/.vscode)
 
-## Monorepo Shape
+## Monorepo Model
 
-- Root `package.json` manages workspaces under `apps/*` and `packages/*`.
-- Each app owns its runtime/build/test scripts.
-- Shared packages own reusable utilities consumed by apps.
-- Root scripts are used for orchestration and shared workflows.
-- Shared linting and formatting live at the repo root.
+- The root [../package.json](/C:/Users/USUARIO/Documents/Proyectos/Playground/package.json)
+  defines workspaces under `apps/*` and `packages/*`.
+- Application workspaces own their runtime, build and test scripts.
+- Shared packages provide reusable code for apps and other workspaces.
+- Cross-workspace orchestration lives in repo scripts instead of duplicated root aliases.
+- Shared linting, formatting and base TypeScript settings are centralized at the root.
 
-## Command Model
+## Workspace Relationships
 
-There are two layers of commands:
+- `apps/angular-playground` is an Angular application.
+- `apps/react-playground` is a React + Vite application.
+- `apps/ts-playground` is a Node-oriented TypeScript application.
+- `packages/utils` is a reusable TypeScript package consumed by the apps.
 
-1. App-local commands defined in each workspace `package.json`
-2. Root commands that orchestrate workspaces through a shared runner
+Applications that depend on shared packages use TypeScript project references for local editor and
+build awareness. The actual dependency shape should always be confirmed in the workspace
+`tsconfig.json` and `package.json` files.
+
+## Command Architecture
+
+There are two command layers:
+
+1. Workspace-local scripts defined in each workspace `package.json`
+2. Root commands that dispatch to one or many workspaces
 
 Root command orchestration lives in:
 
 - [../scripts/run-workspace-command.mjs](/C:/Users/USUARIO/Documents/Proyectos/Playground/scripts/run-workspace-command.mjs)
 - [../scripts/build-packages.mjs](/C:/Users/USUARIO/Documents/Proyectos/Playground/scripts/build-packages.mjs)
 
-The interactive workspace runner is intended to:
+The shared runner is responsible for:
 
-- prompt for a single workspace when no workspace is provided
-- allow bypass with `--workspace`
-- support `--help`
-- support `--all` where the command allows it
-- discover app workspaces from `apps/*/package.json` using repo-specific
-  `playgroundConfig` metadata instead of relying on a hardcoded list
-- include package workspaces from `packages/*/package.json` so shared utilities can participate in
-  the same command flow
-
-The root `package.json` keeps the main commands small and generic. The normal way to target a single
-workspace is through the runner rather than through many duplicated root aliases. Repo-wide
-operations can still be exposed as `*:all` aliases when they are useful for automation.
+- prompting for a workspace when no target is provided
+- supporting `--workspace`, positional workspace ids and `--all`
+- exposing `--help`
+- discovering workspaces from `apps/*/package.json` and `packages/*/package.json`
+- using `playgroundConfig.id` and `playgroundConfig.label` when present
 
 Examples:
 
-- `npm run dev -- angular`
 - `npm run dev -- react`
 - `npm run build -- ts`
 - `npm run check -- utils`
 - `npm run test -- --all`
 
-`build-packages.mjs` is separate from the interactive runner. It discovers workspaces under
-`packages/` and builds them without a prompt. This is kept as a dedicated root flow because shared
-packages sometimes need to be built ahead of app-oriented commands.
-
-Apps can reference shared packages through TypeScript project references for local editor/build
-awareness. Package-wide build flows are implemented in repo scripts so they do not depend on a
-manually maintained package list in `package.json`.
+`build-packages.mjs` stays separate because package compilation is a repo-level concern that may
+need to run before app workflows.
 
 ## Tooling Ownership
 
@@ -83,7 +84,8 @@ manually maintained package list in `package.json`.
 
 - Editor defaults:
   [../.editorconfig](/C:/Users/USUARIO/Documents/Proyectos/Playground/.editorconfig)
-- Node version pin: [../.nvmrc](/C:/Users/USUARIO/Documents/Proyectos/Playground/.nvmrc)
+- Node version pin:
+  [../.nvmrc](/C:/Users/USUARIO/Documents/Proyectos/Playground/.nvmrc)
 - VS Code debug config:
   [../.vscode/launch.json](/C:/Users/USUARIO/Documents/Proyectos/Playground/.vscode/launch.json)
 - VS Code background tasks:
@@ -95,8 +97,8 @@ manually maintained package list in `package.json`.
 
 ## Documentation Rule
 
-Keep architectural explanations here, but do not duplicate volatile values if a config file already
-owns them.
+Keep architectural explanations here, but avoid duplicating volatile values already owned by config
+files.
 
 Examples:
 

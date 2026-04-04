@@ -1,6 +1,7 @@
 # Stack
 
-This document explains where to find the current stack and tooling setup.
+This document explains the current stack at a high level and points to the source-of-truth files for
+details.
 
 Do not treat version numbers here as the only source of truth. Always confirm against the referenced
 files.
@@ -29,6 +30,7 @@ This workspace contains:
 - TypeScript
 - Tailwind CSS v4 through `@tailwindcss/vite`
 - Vitest for tests
+- TypeScript project references to shared packages when needed
 
 ### Angular Playground
 
@@ -45,6 +47,7 @@ This workspace contains:
 - TypeScript
 - Tailwind CSS v4 through PostCSS and CSS-first imports
 - Angular's built-in test runner powered by Vitest
+- Shared package consumption through workspace dependencies
 
 ### TypeScript Playground
 
@@ -61,6 +64,7 @@ This workspace contains:
 - `nodemon` for local iteration
 - `ts-node` for direct execution
 - Vitest for tests
+- Build output emitted to `out/`
 
 ### Shared Utils Package
 
@@ -74,6 +78,7 @@ This workspace contains:
 - Shared TypeScript helpers for cross-workspace reuse
 - `tsc` build output for runtime consumption
 - Vitest-ready test scripts, even when no tests exist yet
+- Published surface defined through package `exports`
 
 ## Shared Tooling
 
@@ -107,6 +112,9 @@ The root command surface is intentionally small:
 
 Single-workspace execution should usually go through the root runner with a workspace argument.
 
+Selection is driven by `playgroundConfig.id` metadata in each workspace manifest, so the root
+scripts do not need to hardcode app names.
+
 Examples:
 
 - `npm run dev -- angular`
@@ -122,6 +130,7 @@ If you need to know what is really supported, inspect the scripts and configs di
 
 - root commands: [../package.json](/C:/Users/USUARIO/Documents/Proyectos/Playground/package.json)
 - per-app commands:
+  [../apps/angular-playground/package.json](/C:/Users/USUARIO/Documents/Proyectos/Playground/apps/angular-playground/package.json)
   [../apps/react-playground/package.json](/C:/Users/USUARIO/Documents/Proyectos/Playground/apps/react-playground/package.json)
   [../apps/ts-playground/package.json](/C:/Users/USUARIO/Documents/Proyectos/Playground/apps/ts-playground/package.json)
 - shared package commands:
