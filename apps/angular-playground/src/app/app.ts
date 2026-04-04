@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
-
-import { createGreetingMessage, normalizeName } from './app.controller';
+import { greet } from '@playground/utils';
 
 @Component({
   selector: 'app-root',
@@ -14,10 +13,16 @@ export class App {
   protected name = 'World';
 
   protected get message(): string {
-    return createGreetingMessage(this.name);
+    return greet(this.normalizeName(this.name));
   }
 
   protected onNameChange(value: string): void {
-    this.name = normalizeName(value);
+    this.name = this.normalizeName(value);
+  }
+
+  private normalizeName(value: string): string {
+    const normalizedValue = value.trim();
+
+    return normalizedValue || 'World';
   }
 }

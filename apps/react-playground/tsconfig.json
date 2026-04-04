@@ -5,6 +5,7 @@
     "module": "ESNext",
     "moduleResolution": "bundler",
     "jsx": "react-jsx",
+    "noUncheckedSideEffectImports": false,
     "composite": true,
     "declaration": true,
     "emitDeclarationOnly": true,

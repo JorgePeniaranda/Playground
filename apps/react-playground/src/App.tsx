@@ -1,13 +1,20 @@
 import { useState } from 'react';
 
-import { createGreetingMessage, normalizeName } from './App.controller';
+import { greet } from '@playground/utils';
+import './App.css';
+
+function normalizeName(value: string): string {
+  const normalizedValue = value.trim();
+
+  return normalizedValue || 'World';
+}
 
 export default function App() {
   const [name, setName] = useState('World');
-  const message = createGreetingMessage(name);
+  const message = greet(normalizeName(name));
 
   return (
-    <main className='flex min-h-screen items-center justify-center px-6 py-12'>
+    <main className='app-shell flex min-h-screen items-center justify-center px-6 py-12'>
       <section className='w-full max-w-2xl rounded-4xl border border-white/70 bg-white/85 p-8 shadow-[0_24px_80px_rgba(60,78,120,0.18)] backdrop-blur sm:p-10'>
         <p className='text-brand-700 text-sm font-semibold tracking-[0.22em] uppercase'>
           React Playground
