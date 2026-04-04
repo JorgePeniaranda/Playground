@@ -12,6 +12,7 @@ export default defineConfig(...tseslint.configs.strict, ...tseslint.configs.styl
         './apps/*/tsconfig.json',
         './apps/*/tsconfig.test.json',
         './packages/*/tsconfig.json',
+        './packages/*/tsconfig.test.json',
       ],
       tsconfigRootDir,
     },

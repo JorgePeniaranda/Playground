@@ -4,20 +4,16 @@
   "private": true,
   "type": "module",
   "sideEffects": false,
+  "playgroundConfig": {
+    "id": "utils",
+    "label": "Utils Package"
+  },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
-    },
-    "./filters": {
-      "types": "./dist/filters/index.d.ts",
-      "import": "./dist/filters/index.js"
-    },
-    "./filters/compactArray": {
-      "types": "./dist/filters/compactArray.d.ts",
-      "import": "./dist/filters/compactArray.js"
     }
   },
   "files": [
@@ -26,11 +22,12 @@
   "scripts": {
     "dev": "tsc -p tsconfig.json --watch --preserveWatchOutput",
     "build": "tsc -p tsconfig.json",
+    "clean": "node ../../scripts/clean-workspace.mjs dist coverage tsconfig.tsbuildinfo",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --ignore-path ../../.prettierignore --write .",
     "format:check": "prettier --ignore-path ../../.prettierignore --check .",
-    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.test.json",
     "test": "vitest run --passWithNoTests",
     "test:watch": "vitest --passWithNoTests",
     "test:coverage": "vitest run --coverage --passWithNoTests",
@@ -38,6 +35,7 @@
   },
   "devDependencies": {
     "@types/node": "24.10.1",
+    "@vitest/coverage-v8": "4.1.2",
     "vitest": "4.1.2"
   }
 }

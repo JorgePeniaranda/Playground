@@ -21,9 +21,6 @@ coverage/
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
-# Local-only data
-saves/
-
 # Logs
 *.log
 npm-debug.log*

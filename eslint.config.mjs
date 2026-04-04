@@ -15,7 +15,6 @@ export default defineConfig(
     '**/.vite/',
     '**/vite.config.js.timestamp-*',
     '**/vite.config.ts.timestamp-*',
-    'saves/',
   ]),
   //#endregion
 );

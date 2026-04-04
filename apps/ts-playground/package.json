@@ -10,6 +10,7 @@
   "scripts": {
     "dev": "nodemon",
     "build": "tsc",
+    "clean": "node ../../scripts/clean-workspace.mjs out coverage",
     "start": "node ./out/index.js",
     "start:dev": "node --loader ts-node/esm index.ts",
     "lint": "eslint .",

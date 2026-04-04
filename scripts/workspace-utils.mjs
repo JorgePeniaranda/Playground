@@ -111,6 +111,58 @@ export async function readAppWorkspaceCatalog(relativeDirectory) {
 }
 
 /**
+ * @param {{ relativeDirectory: string, requirePlaygroundConfig?: boolean }} options
+ * @returns {Promise<AppWorkspaceEntry[]>}
+ */
+export async function readWorkspaceCatalog(options) {
+  const { relativeDirectory, requirePlaygroundConfig = false } = options;
+  const manifests = await readWorkspaceManifests(relativeDirectory);
+
+  const catalog = manifests.map(async (workspaceManifest) => {
+    const manifest = await readJsonFile(workspaceManifest.manifestPath);
+    const playgroundConfig = /** @type {{ id?: unknown, label?: unknown } | undefined} */ (
+      manifest.playgroundConfig
+    );
+
+    if (playgroundConfig && typeof playgroundConfig === 'object') {
+      const { id, label } = playgroundConfig;
+
+      if (!id || typeof id !== 'string') {
+        throw new Error(`Missing "playgroundConfig.id" in ${workspaceManifest.manifestPath}.`);
+      }
+
+      if (!label || typeof label !== 'string') {
+        throw new Error(`Missing "playgroundConfig.label" in ${workspaceManifest.manifestPath}.`);
+      }
+
+      return {
+        id,
+        label,
+        workspace: workspaceManifest.name,
+        directory: workspaceManifest.directory,
+        manifestPath: workspaceManifest.manifestPath,
+      };
+    }
+
+    if (requirePlaygroundConfig) {
+      throw new Error(`Missing "playgroundConfig" metadata in ${workspaceManifest.manifestPath}.`);
+    }
+
+    return {
+      id: workspaceManifest.name,
+      label: workspaceManifest.name,
+      workspace: workspaceManifest.name,
+      directory: workspaceManifest.directory,
+      manifestPath: workspaceManifest.manifestPath,
+    };
+  });
+
+  const entries = await Promise.all(catalog);
+
+  return entries.sort((left, right) => left.label.localeCompare(right.label));
+}
+
+/**
  * @param {string} command
  * @param {string[]} args
  * @param {{ cwd?: string, stdout?: NodeJS.WritableStream }} [options]
@@ -120,13 +172,11 @@ export function runCommand(command, args, options = {}) {
   const { cwd = repositoryRoot, stdout = process.stdout } = options;
 
   return new Promise((resolve, reject) => {
-    const child = /** @type {import('node:child_process').ChildProcess} */ (
-      spawn(command, args, {
-        cwd,
-        stdio: 'inherit',
-        shell: process.platform === 'win32',
-      })
-    );
+    const child = spawn(command, args, {
+      cwd,
+      stdio: 'inherit',
+      shell: process.platform === 'win32',
+    });
 
     if (stdout) {
       stdout.write(`Running: ${formatCommandPreview(command, args)}\n\n`);

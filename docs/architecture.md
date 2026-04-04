@@ -27,7 +27,7 @@ Primary directories:
 There are two layers of commands:
 
 1. App-local commands defined in each workspace `package.json`
-2. Root commands that orchestrate workspaces
+2. Root commands that orchestrate workspaces through a shared runner
 
 Root command orchestration lives in:
 
@@ -40,11 +40,24 @@ The interactive workspace runner is intended to:
 - allow bypass with `--workspace`
 - support `--help`
 - support `--all` where the command allows it
-- discover app workspaces from `apps/*/package.json` instead of relying on a hardcoded list
-  using repo-specific `playgroundConfig` metadata
+- discover app workspaces from `apps/*/package.json` using repo-specific
+  `playgroundConfig` metadata instead of relying on a hardcoded list
+- include package workspaces from `packages/*/package.json` so shared utilities can participate in
+  the same command flow
+
+The root `package.json` keeps the main commands small and generic. The normal way to target a single
+workspace is through the runner rather than through many duplicated root aliases.
+
+Examples:
+
+- `npm run dev -- react`
+- `npm run build -- ts`
+- `npm run check -- utils`
+- `npm run test -- --all`
 
 `build-packages.mjs` is separate from the interactive runner. It discovers workspaces under
-`packages/` and builds them without a prompt.
+`packages/` and builds them without a prompt. This is kept as a dedicated root flow because shared
+packages sometimes need to be built ahead of app-oriented commands.
 
 Apps can reference shared packages through TypeScript project references for local editor/build
 awareness. Package-wide build flows are implemented in repo scripts so they do not depend on a

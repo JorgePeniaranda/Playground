@@ -69,8 +69,28 @@ This workspace contains:
   [../tsconfig.base.json](/C:/Users/USUARIO/Documents/Proyectos/Playground/tsconfig.base.json)
 - Interactive root command runner:
   [../scripts/run-workspace-command.mjs](/C:/Users/USUARIO/Documents/Proyectos/Playground/scripts/run-workspace-command.mjs)
+- Workspace artifact cleanup helper:
+  [../scripts/clean-workspace.mjs](/C:/Users/USUARIO/Documents/Proyectos/Playground/scripts/clean-workspace.mjs)
 - Shared Vitest config helper:
   [../configs/vitest/createVitestConfig.mjs](/C:/Users/USUARIO/Documents/Proyectos/Playground/configs/vitest/createVitestConfig.mjs)
+
+## Root Command Conventions
+
+The root command surface is intentionally small:
+
+- main commands such as `dev`, `build`, `clean`, `lint`, `typecheck`, `test`, and `check`
+- global aliases such as `build:all`, `clean:all`, `typecheck:all`, `test:all`, and `check:all`
+- repo-wide formatting and linting commands such as `format`, `format:check`, `lint:all`, and
+  `lint:fix:all`
+
+Single-workspace execution should usually go through the root runner with a workspace argument.
+
+Examples:
+
+- `npm run dev -- react`
+- `npm run lint -- ts`
+- `npm run typecheck -- utils`
+- `npm run check -- --all`
 
 ## Verification
 

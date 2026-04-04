@@ -1,17 +1,39 @@
-import { useState } from 'react';
+import React, { useCallback, useState } from 'react';
+
+import { createGreetingMessage, normalizeName } from './App.controller';
 
 export default function App() {
-  const [count, setCount] = useState(0);
+  const [name, setName] = useState('World');
+  const message = createGreetingMessage(name);
 
-  const handleClick = () => {
-    setCount(count + 1);
-  };
+  const handleNameChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setName(normalizeName(event.target.value));
+    },
+    [setName],
+  );
 
   return (
-    <div>
-      <h1>Hello World!</h1>
-      <button onClick={handleClick}>Click me</button>
-      <p>Count: {count}</p>
-    </div>
+    <main className='page'>
+      <div className='card'>
+        <p className='eyebrow'>React Playground</p>
+        <h1>{message}</h1>
+        <p className='lede'>
+          This app reuses the shared <code>greet()</code> helper.
+        </p>
+
+        <label className='field' htmlFor='name'>
+          Name
+        </label>
+        <input
+          className='input'
+          id='name'
+          onChange={handleNameChange}
+          placeholder='World'
+          type='text'
+          value={name}
+        />
+      </div>
+    </main>
   );
 }

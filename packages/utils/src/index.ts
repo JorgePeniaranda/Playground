@@ -1,1 +1,1 @@
-export { compactArray } from './filters/compactArray.js';
+export { greet } from './greet.js';

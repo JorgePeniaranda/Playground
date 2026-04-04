@@ -1,25 +1,74 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, test, vi } from 'vitest';
 
-import { main } from './index';
+import {
+  createGreetingMessage,
+  main,
+  resolveExecutedFilePath,
+  runCliModule,
+  shouldRunAsScript,
+} from './index.js';
 
-describe('main ts', () => {
-  let consoleSpy: ReturnType<typeof vi.spyOn>;
+describe('createGreetingMessage', () => {
+  test('builds a greeting with the shared utility', () => {
+    expect(createGreetingMessage()).toBe('Hello, World! from TS Playground');
+    expect(createGreetingMessage('Playground')).toBe('Hello, Playground! from TS Playground');
+  });
+});
 
-  beforeEach(() => {
-    consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => undefined);
+describe('resolveExecutedFilePath', () => {
+  test('returns an empty string when no executed path is provided', () => {
+    expect(resolveExecutedFilePath(undefined)).toBe('');
+  });
+});
+
+describe('shouldRunAsScript', () => {
+  test('returns true when the current file is the executed file', () => {
+    expect(shouldRunAsScript('C:/playground/index.ts', 'C:/playground/index.ts')).toBe(true);
   });
 
+  test('returns false when the module is imported', () => {
+    expect(shouldRunAsScript('C:/playground/index.ts', 'C:/playground/test.ts')).toBe(false);
+  });
+});
+
+describe('main', () => {
   afterEach(() => {
-    consoleSpy.mockRestore();
+    vi.restoreAllMocks();
   });
 
-  it('should print "Hello World!" to the console', () => {
+  test('prints the default greeting', () => {
+    const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {
+      return;
+    });
+
     main();
-    expect(consoleSpy).toHaveBeenCalledWith('Hello World!');
+
+    expect(logSpy).toHaveBeenCalledWith('Hello, World! from TS Playground');
+  });
+});
+
+describe('runCliModule', () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
   });
 
-  it('should call console.log once', () => {
-    main();
-    expect(consoleSpy).toHaveBeenCalledTimes(1);
+  test('runs the CLI entrypoint when executed directly', () => {
+    const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {
+      return;
+    });
+
+    runCliModule('C:/playground/index.ts', 'C:/playground/index.ts');
+
+    expect(logSpy).toHaveBeenCalledWith('Hello, World! from TS Playground');
+  });
+
+  test('does nothing when the module is imported', () => {
+    const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {
+      return;
+    });
+
+    runCliModule('C:/playground/index.ts', 'C:/playground/test.ts');
+
+    expect(logSpy).not.toHaveBeenCalled();
   });
 });

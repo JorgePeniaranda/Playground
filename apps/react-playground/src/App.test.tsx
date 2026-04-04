@@ -1,15 +1,21 @@
-import { cleanup, render, screen } from '@testing-library/react';
-import { afterEach, describe, expect, test } from 'vitest';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { describe, expect, test } from 'vitest';
 
 import App from './App';
 
 describe('App', () => {
-  afterEach(() => {
-    cleanup();
+  test('renders the shared greeting', () => {
+    render(<App />);
+
+    expect(screen.getByRole('heading', { name: 'Hello, World!' })).toBeDefined();
+    expect(screen.getByText(/reuses the shared/i)).toBeDefined();
   });
 
-  test('renders Hello World heading', () => {
+  test('updates the greeting when the name changes', () => {
     render(<App />);
-    expect(screen.getByText('Hello World!')).toBeDefined();
+
+    fireEvent.change(screen.getByLabelText('Name'), { target: { value: 'Playground' } });
+
+    expect(screen.getByRole('heading', { name: 'Hello, Playground!' })).toBeDefined();
   });
 });

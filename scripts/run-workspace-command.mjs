@@ -1,20 +1,16 @@
 // @ts-check
 
-import path from 'node:path';
 import { stdin as input, stdout as output, stderr } from 'node:process';
 import { clearScreenDown, moveCursor } from 'node:readline';
-import {
-  readAppWorkspaceCatalog,
-  readJsonFile,
-  repositoryRoot,
-  runNpmCommand,
-} from './workspace-utils.mjs';
+import { readJsonFile, readWorkspaceCatalog, runNpmCommand } from './workspace-utils.mjs';
 
 /**
  * @typedef {Object} WorkspaceEntry
  * @property {string} id
  * @property {string} label
  * @property {string} workspace
+ * @property {string} directory
+ * @property {string} manifestPath
  */
 
 /**
@@ -36,6 +32,7 @@ import {
 const supportedCommands = new Set([
   'dev',
   'build',
+  'clean',
   'lint',
   'lint:fix',
   'format',
@@ -106,8 +103,7 @@ function createWorkspaceLookup(workspaceCatalog) {
  * @returns {Promise<Record<string, string>>}
  */
 async function readWorkspaceScripts(workspace) {
-  const manifestPath = path.join(repositoryRoot, 'apps', workspace.workspace, 'package.json');
-  const manifest = await readJsonFile(manifestPath);
+  const manifest = await readJsonFile(workspace.manifestPath);
 
   const { scripts } = manifest;
 
@@ -361,7 +357,10 @@ function createSingleWorkspaceArgs(command, workspace, forwardedArgs) {
 
 async function main() {
   const command = process.argv[2];
-  const workspaceCatalog = await readAppWorkspaceCatalog('apps');
+  const workspaceCatalog = [
+    ...(await readWorkspaceCatalog({ relativeDirectory: 'apps', requirePlaygroundConfig: true })),
+    ...(await readWorkspaceCatalog({ relativeDirectory: 'packages' })),
+  ].sort((left, right) => left.label.localeCompare(right.label));
   const workspaceById = createWorkspaceLookup(workspaceCatalog);
 
   if (!command || !supportedCommands.has(command)) {
