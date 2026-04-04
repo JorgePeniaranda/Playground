@@ -2,6 +2,7 @@
   "files": [],
   "references": [
     { "path": "packages/utils" },
+    { "path": "apps/angular-playground" },
     { "path": "apps/react-playground" },
     { "path": "apps/ts-playground" }
   ]

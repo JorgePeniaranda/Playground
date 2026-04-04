@@ -3,9 +3,16 @@ import { fileURLToPath } from 'node:url';
 import tseslint from 'typescript-eslint';
 
 const tsconfigRootDir = fileURLToPath(new URL('../../', import.meta.url));
+const typescriptFiles = ['**/*.ts', '**/*.tsx', '**/*.mts', '**/*.cts'];
+const scopedTypescriptConfigs = [...tseslint.configs.strict, ...tseslint.configs.stylistic].map(
+  (config) => ({
+    ...config,
+    files: config.files ?? typescriptFiles,
+  }),
+);
 
-export default defineConfig(...tseslint.configs.strict, ...tseslint.configs.stylistic, {
-  files: ['**/*.ts', '**/*.tsx'],
+export default defineConfig(...scopedTypescriptConfigs, {
+  files: typescriptFiles,
   languageOptions: {
     parserOptions: {
       project: [

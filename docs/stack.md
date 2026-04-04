@@ -90,6 +90,10 @@ This workspace contains:
   [../scripts/clean-workspace.mjs](/C:/Users/USUARIO/Documents/Proyectos/Playground/scripts/clean-workspace.mjs)
 - Shared Vitest config helper:
   [../configs/vitest/createVitestConfig.mjs](/C:/Users/USUARIO/Documents/Proyectos/Playground/configs/vitest/createVitestConfig.mjs)
+- VS Code workspace recommendations:
+  [../.vscode/extensions.json](/C:/Users/USUARIO/Documents/Proyectos/Playground/.vscode/extensions.json)
+- VS Code MCP integration:
+  [../.vscode/mcp.json](/C:/Users/USUARIO/Documents/Proyectos/Playground/.vscode/mcp.json)
 
 ## Root Command Conventions
 

@@ -27,7 +27,7 @@
       "name": "react-playground: Dev + Debug",
       "type": "chrome",
       "request": "launch",
-      "preLaunchTask": "react-playground: vite dev",
+      "preLaunchTask": "react-playground: dev",
       "url": "http://localhost:5173",
       "webRoot": "${workspaceFolder}/apps/react-playground",
       "sourceMaps": true,
@@ -36,6 +36,16 @@
         "/*": "${workspaceFolder}/apps/react-playground/*",
         "/@fs/*": "*"
       },
+      "skipFiles": ["<node_internals>/**"]
+    },
+    {
+      "name": "angular-playground: Dev + Debug",
+      "type": "chrome",
+      "request": "launch",
+      "preLaunchTask": "angular-playground: dev",
+      "url": "http://localhost:4200",
+      "webRoot": "${workspaceFolder}/apps/angular-playground",
+      "sourceMaps": true,
       "skipFiles": ["<node_internals>/**"]
     }
   ]

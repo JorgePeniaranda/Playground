@@ -2,6 +2,7 @@
 
 Monorepo pequeño para experimentar con código en workspaces de apps y paquetes compartidos:
 
+- `angular-playground`: Angular + TypeScript
 - `react-playground`: React + Vite + TypeScript
 - `ts-playground`: TypeScript orientado a Node.js
 - `@playground/utils`: utilidades TypeScript compartidas
@@ -21,6 +22,7 @@ npm install
 
 ```text
 apps/
+  angular-playground/
   react-playground/
   ts-playground/
 packages/

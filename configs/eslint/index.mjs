@@ -1,13 +1,6 @@
-import BaseEslintConfig from './base.mjs';
-import NodeEslintConfig from './node.mjs';
-import ReactEslintConfig from './react.mjs';
-import TestsEslintConfig from './tests.mjs';
-import TypescriptEslintConfig from './typescript.mjs';
-
-export default {
-  base: BaseEslintConfig,
-  node: NodeEslintConfig,
-  react: ReactEslintConfig,
-  tests: TestsEslintConfig,
-  typescript: TypescriptEslintConfig,
-};
+export { default as angular } from './angular.mjs';
+export { default as base } from './base.mjs';
+export { default as node } from './node.mjs';
+export { default as react } from './react.mjs';
+export { default as tests } from './tests.mjs';
+export { default as typescript } from './typescript.mjs';

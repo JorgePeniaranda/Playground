@@ -7,8 +7,10 @@ describe('App', () => {
   test('renders the shared greeting', () => {
     render(<App />);
 
-    expect(screen.getByRole('heading', { name: 'Hello, World!' })).toBeDefined();
-    expect(screen.getByText(/reuses the shared/i)).toBeDefined();
+    expect(screen.getByRole('main')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Hello, World!' })).toBeInTheDocument();
+    expect(screen.getByText(/reuses the shared/i)).toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: 'Name' })).toHaveAttribute('autocomplete', 'name');
   });
 
   test('updates the greeting when the name changes', () => {
@@ -16,6 +18,14 @@ describe('App', () => {
 
     fireEvent.change(screen.getByLabelText('Name'), { target: { value: 'Playground' } });
 
-    expect(screen.getByRole('heading', { name: 'Hello, Playground!' })).toBeDefined();
+    expect(screen.getByRole('heading', { name: 'Hello, Playground!' })).toBeInTheDocument();
+  });
+
+  test('falls back to World when the input is blank', () => {
+    render(<App />);
+
+    fireEvent.change(screen.getByLabelText('Name'), { target: { value: '   ' } });
+
+    expect(screen.getByRole('heading', { name: 'Hello, World!' })).toBeInTheDocument();
   });
 });

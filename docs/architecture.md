@@ -88,6 +88,10 @@ manually maintained package list in `package.json`.
   [../.vscode/launch.json](/C:/Users/USUARIO/Documents/Proyectos/Playground/.vscode/launch.json)
 - VS Code background tasks:
   [../.vscode/tasks.json](/C:/Users/USUARIO/Documents/Proyectos/Playground/.vscode/tasks.json)
+- VS Code recommended extensions:
+  [../.vscode/extensions.json](/C:/Users/USUARIO/Documents/Proyectos/Playground/.vscode/extensions.json)
+- VS Code MCP servers:
+  [../.vscode/mcp.json](/C:/Users/USUARIO/Documents/Proyectos/Playground/.vscode/mcp.json)
 
 ## Documentation Rule
 

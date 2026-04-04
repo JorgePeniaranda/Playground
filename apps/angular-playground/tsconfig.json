@@ -3,6 +3,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "strict": true,
+    "composite": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,

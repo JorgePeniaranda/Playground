@@ -1,21 +1,10 @@
 import { defineConfig, globalIgnores } from 'eslint/config';
-import eslintConfigs from './configs/eslint/index.mjs';
+import ignores from './configs/eslint/ignores.mjs';
+import { base, node, typescript } from './configs/eslint/index.mjs';
 
 export default defineConfig(
-  ...Object.values(eslintConfigs),
-  //#region 🔹 Ignore paths that should not be linted
-  globalIgnores([
-    '**/.angular/',
-    '**/coverage/',
-    '**/out/',
-    '**/dist/',
-    '**/.tsbuild/',
-    '**/*.tsbuildinfo',
-    '**/.eslintcache',
-    '**/.cache/',
-    '**/.vite/',
-    '**/vite.config.js.timestamp-*',
-    '**/vite.config.ts.timestamp-*',
-  ]),
-  //#endregion
+  base,
+  node,
+  typescript,
+  globalIgnores(ignores),
 );

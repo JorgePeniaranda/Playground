@@ -2,10 +2,66 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "react-playground: vite dev",
-      "type": "npm",
-      "script": "dev",
-      "path": "apps/react-playground",
+      "label": "ts-playground: dev",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "dev", "--", "ts"],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "custom",
+        "pattern": {
+          "regexp": "."
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": ".*",
+          "endsPattern": "\\[nodemon\\] watching path\\(s\\):|\\[nodemon\\] clean exit - waiting for changes before restart"
+        }
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": false
+      }
+    },
+
+    {
+      "label": "react-playground: dev",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "dev", "--", "react"],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "custom",
+        "pattern": {
+          "regexp": "."
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": ".*",
+          "endsPattern": "Local:\\s+https?://\\S+"
+        }
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": false
+      }
+    },
+    {
+      "label": "angular-playground: dev",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "dev", "--", "angular"],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
       "isBackground": true,
       "problemMatcher": {
         "owner": "custom",
