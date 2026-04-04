@@ -1,3 +1,29 @@
+/* Shared surface styles keep the React and Angular examples aligned. */
 .app-shell {
   width: 100%;
+}
+
+.app-card {
+  background: var(--surface-card-background);
+  border-color: var(--surface-card-border);
+  box-shadow: var(--surface-card-shadow);
+}
+
+.app-copy {
+  color: var(--color-copy-muted);
+}
+
+.app-field-label {
+  color: var(--color-main);
+}
+
+.app-input {
+  background: var(--field-background);
+  border-color: var(--field-border);
+  box-shadow: var(--field-shadow);
+}
+
+.app-code {
+  background: var(--field-background);
+  color: var(--color-page-foreground);
 }

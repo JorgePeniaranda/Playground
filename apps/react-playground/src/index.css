@@ -3,19 +3,65 @@
 @theme {
   --font-sans: 'Segoe UI', Inter, system-ui, sans-serif;
   --font-mono: 'Cascadia Code', Consolas, monospace;
-  --color-brand-50: oklch(0.97 0.014 228.84);
-  --color-brand-100: oklch(0.93 0.032 230.51);
-  --color-brand-500: oklch(0.61 0.16 252.47);
-  --color-brand-700: oklch(0.49 0.13 256.41);
-  --color-ink-900: oklch(0.22 0.03 255.17);
+  --color-main: oklch(0.69 0.11 220);
 }
 
 @layer base {
+  :root {
+    color-scheme: light dark;
+    --color-page-background:
+      radial-gradient(
+        circle at top,
+        color-mix(in oklch, var(--color-main) 18%, white) 0%,
+        transparent 42%
+      ),
+      linear-gradient(180deg, oklch(0.98 0.01 220) 0%, oklch(0.95 0.01 240) 100%);
+    --color-page-foreground: oklch(0.24 0.03 255);
+    --color-copy-muted: oklch(0.5 0.03 250);
+
+    --surface-card-background: color-mix(in oklch, white 88%, var(--color-main) 12%);
+    --surface-card-border: oklch(1 0 0 / 0.7);
+    --surface-card-shadow: 0 24px 80px oklch(0.45 0.06 240 / 0.18);
+
+    --field-background: oklch(0.97 0.01 240);
+    --field-border: oklch(0.88 0.02 250);
+    --field-shadow: 0 1px 0 oklch(1 0 0 / 0.5) inset, 0 10px 30px oklch(0.45 0.04 240 / 0.08) inset;
+  }
+
   html {
     font-family: var(--font-sans);
   }
 
   body {
-    @apply from-brand-50 text-ink-900 min-w-80 bg-linear-to-b to-slate-100;
+    background: var(--color-page-background);
+    color: var(--color-page-foreground);
+    @apply min-w-80;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  @layer base {
+    :root {
+      --color-page-background:
+        radial-gradient(
+          circle at top,
+          color-mix(in oklch, var(--color-main) 28%, black) 0%,
+          transparent 44%
+        ),
+        linear-gradient(180deg, oklch(0.2 0.02 240) 0%, oklch(0.14 0.02 250) 100%);
+      --color-page-foreground: oklch(0.92 0.01 240);
+      --color-copy-muted: oklch(0.76 0.02 240);
+
+      --surface-card-background: color-mix(
+        in oklch,
+        oklch(0.22 0.02 245) 88%,
+        var(--color-main) 12%
+      );
+      --surface-card-border: oklch(0.82 0.02 240 / 0.16);
+      --surface-card-shadow: 0 24px 80px oklch(0.04 0.01 240 / 0.48);
+      --field-background: oklch(0.26 0.02 245);
+      --field-border: oklch(0.4 0.03 240);
+      --field-shadow: 0 1px 0 oklch(1 0 0 / 0.04) inset, 0 10px 30px oklch(0 0 0 / 0.18) inset;
+    }
   }
 }
