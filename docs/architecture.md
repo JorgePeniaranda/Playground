@@ -6,6 +6,7 @@ This repo is a small monorepo used as a playground/template for code experiments
 
 Primary directories:
 
+- [../apps/angular-playground](/C:/Users/USUARIO/Documents/Proyectos/Playground/apps/angular-playground)
 - [../apps/react-playground](/C:/Users/USUARIO/Documents/Proyectos/Playground/apps/react-playground)
 - [../apps/ts-playground](/C:/Users/USUARIO/Documents/Proyectos/Playground/apps/ts-playground)
 - [../packages/utils](/C:/Users/USUARIO/Documents/Proyectos/Playground/packages/utils)
@@ -51,6 +52,7 @@ operations can still be exposed as `*:all` aliases when they are useful for auto
 
 Examples:
 
+- `npm run dev -- angular`
 - `npm run dev -- react`
 - `npm run build -- ts`
 - `npm run check -- utils`

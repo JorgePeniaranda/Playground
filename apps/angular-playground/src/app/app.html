@@ -1,0 +1,28 @@
+<main class="flex min-h-screen items-center justify-center px-6 py-12">
+  <section
+    class="w-full max-w-2xl rounded-[2rem] border border-white/70 bg-white/85 p-8 shadow-[0_24px_80px_rgba(60,78,120,0.18)] backdrop-blur sm:p-10"
+  >
+    <p class="text-brand-700 text-sm font-semibold tracking-[0.22em] uppercase">
+      Angular Playground
+    </p>
+    <h1 class="mt-3 text-4xl font-semibold tracking-tight sm:text-6xl">{{ message }}</h1>
+    <p class="mt-4 max-w-xl text-base leading-7 text-slate-600">
+      Tailwind CSS v4 is now wired with PostCSS using the CSS-first setup, and this view still
+      reuses the shared <code class="rounded bg-slate-100 px-1.5 py-0.5">greet()</code> helper.
+    </p>
+
+    <label class="mt-8 block text-sm font-medium text-slate-700" for="name">Name</label>
+    <input
+      #nameInput="ngModel"
+      [(ngModel)]="name"
+      (ngModelChange)="onNameChange($event)"
+      class="focus:border-brand-500 focus:ring-brand-100 mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-base shadow-inner shadow-slate-200/50 transition outline-none focus:bg-white focus:ring-4"
+      id="name"
+      name="name"
+      placeholder="World"
+      type="text"
+    />
+  </section>
+</main>
+
+<router-outlet />

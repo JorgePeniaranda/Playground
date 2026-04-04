@@ -10,11 +10,13 @@ bun.lock
 # Build output
 dist/
 out/
+out-tsc/
 coverage/
 .tsbuild/
 *.tsbuildinfo
 
 # Tool caches
+.angular/
 .eslintcache
 .cache/
 .vite/

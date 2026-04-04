@@ -10,6 +10,8 @@ export default defineConfig(...tseslint.configs.strict, ...tseslint.configs.styl
     parserOptions: {
       project: [
         './apps/*/tsconfig.json',
+        './apps/*/tsconfig.app.json',
+        './apps/*/tsconfig.spec.json',
         './apps/*/tsconfig.test.json',
         './packages/*/tsconfig.json',
         './packages/*/tsconfig.test.json',

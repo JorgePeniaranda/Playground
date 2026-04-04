@@ -27,7 +27,24 @@ This workspace contains:
 - React application code
 - Vite dev/build tooling
 - TypeScript
+- Tailwind CSS v4 through `@tailwindcss/vite`
 - Vitest for tests
+
+### Angular Playground
+
+See:
+
+- [../apps/angular-playground/package.json](/C:/Users/USUARIO/Documents/Proyectos/Playground/apps/angular-playground/package.json)
+- [../apps/angular-playground/tsconfig.json](/C:/Users/USUARIO/Documents/Proyectos/Playground/apps/angular-playground/tsconfig.json)
+- [../apps/angular-playground/angular.json](/C:/Users/USUARIO/Documents/Proyectos/Playground/apps/angular-playground/angular.json)
+
+This workspace contains:
+
+- Angular application code
+- Angular CLI build and dev tooling
+- TypeScript
+- Tailwind CSS v4 through PostCSS and CSS-first imports
+- Angular's built-in test runner powered by Vitest
 
 ### TypeScript Playground
 
@@ -88,6 +105,7 @@ Single-workspace execution should usually go through the root runner with a work
 
 Examples:
 
+- `npm run dev -- angular`
 - `npm run dev -- react`
 - `npm run lint -- ts`
 - `npm run format -- utils`

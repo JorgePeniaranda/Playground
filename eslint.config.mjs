@@ -5,6 +5,7 @@ export default defineConfig(
   ...Object.values(eslintConfigs),
   //#region 🔹 Ignore paths that should not be linted
   globalIgnores([
+    '**/.angular/',
     '**/coverage/',
     '**/out/',
     '**/dist/',
