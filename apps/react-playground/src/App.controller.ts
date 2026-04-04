@@ -1,7 +1,9 @@
 import { greet } from '@playground/utils';
 
 export function normalizeName(value: string): string {
-  return value || 'World';
+  const normalizedValue = value.trim();
+
+  return normalizedValue || 'World';
 }
 
 export function createGreetingMessage(name: string): string {

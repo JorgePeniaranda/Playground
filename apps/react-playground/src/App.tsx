@@ -1,17 +1,10 @@
-import React, { useCallback, useState } from 'react';
+import { useState } from 'react';
 
 import { createGreetingMessage, normalizeName } from './App.controller';
 
 export default function App() {
   const [name, setName] = useState('World');
   const message = createGreetingMessage(name);
-
-  const handleNameChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      setName(normalizeName(event.target.value));
-    },
-    [setName],
-  );
 
   return (
     <main className='page'>
@@ -28,7 +21,9 @@ export default function App() {
         <input
           className='input'
           id='name'
-          onChange={handleNameChange}
+          onChange={(event) => {
+            setName(normalizeName(event.target.value));
+          }}
           placeholder='World'
           type='text'
           value={name}

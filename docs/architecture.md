@@ -46,7 +46,8 @@ The interactive workspace runner is intended to:
   the same command flow
 
 The root `package.json` keeps the main commands small and generic. The normal way to target a single
-workspace is through the runner rather than through many duplicated root aliases.
+workspace is through the runner rather than through many duplicated root aliases. Repo-wide
+operations can still be exposed as `*:all` aliases when they are useful for automation.
 
 Examples:
 

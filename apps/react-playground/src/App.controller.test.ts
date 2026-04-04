@@ -7,8 +7,16 @@ describe('App controller', () => {
     expect(normalizeName('')).toBe('World');
   });
 
+  test('trims whitespace-only values before applying the fallback', () => {
+    expect(normalizeName('   ')).toBe('World');
+  });
+
   test('preserves a provided name', () => {
     expect(normalizeName('Playground')).toBe('Playground');
+  });
+
+  test('trims surrounding whitespace from a provided name', () => {
+    expect(normalizeName('  Playground  ')).toBe('Playground');
   });
 
   test('builds the greeting message with the shared utility', () => {

@@ -78,10 +78,11 @@ This workspace contains:
 
 The root command surface is intentionally small:
 
-- main commands such as `dev`, `build`, `clean`, `lint`, `typecheck`, `test`, and `check`
-- global aliases such as `build:all`, `clean:all`, `typecheck:all`, `test:all`, and `check:all`
-- repo-wide formatting and linting commands such as `format`, `format:check`, `lint:all`, and
-  `lint:fix:all`
+- main commands such as `dev`, `build`, `clean`, `lint`, `format`, `typecheck`, `test`, and
+  `check`
+- global aliases such as `build:all`, `clean:all`, `format:all`, `format:check:all`,
+  `typecheck:all`, `test:all`, and `check:all`
+- repo-wide linting commands such as `lint:all` and `lint:fix:all`
 
 Single-workspace execution should usually go through the root runner with a workspace argument.
 
@@ -89,6 +90,7 @@ Examples:
 
 - `npm run dev -- react`
 - `npm run lint -- ts`
+- `npm run format -- utils`
 - `npm run typecheck -- utils`
 - `npm run check -- --all`
 

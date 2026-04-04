@@ -3,6 +3,18 @@
 import path from 'node:path';
 import { removeIfExists } from './workspace-utils.mjs';
 
+const currentWorkingDirectory = process.cwd();
+
+/**
+ * @param {string} targetPath
+ * @returns {boolean}
+ */
+function isPathInsideCurrentWorkspace(targetPath) {
+  const relativePath = path.relative(currentWorkingDirectory, targetPath);
+
+  return relativePath !== '' && !relativePath.startsWith('..') && !path.isAbsolute(relativePath);
+}
+
 async function main() {
   const artifactPaths = process.argv.slice(2);
 
@@ -16,6 +28,13 @@ async function main() {
 
   for (const artifactPath of artifactPaths) {
     const resolvedPath = path.resolve(process.cwd(), artifactPath);
+
+    if (!isPathInsideCurrentWorkspace(resolvedPath)) {
+      throw new Error(
+        `Refusing to remove "${artifactPath}" because it resolves outside the current workspace.`,
+      );
+    }
+
     const removed = await removeIfExists(resolvedPath);
 
     if (removed) {
