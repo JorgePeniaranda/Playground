@@ -29,18 +29,24 @@ There are two layers of commands:
 1. App-local commands defined in each workspace `package.json`
 2. Root commands that orchestrate workspaces
 
-Root interactive commands are implemented in:
+Root command orchestration lives in:
 
 - [../scripts/run-workspace-command.mjs](/C:/Users/USUARIO/Documents/Proyectos/Playground/scripts/run-workspace-command.mjs)
+- [../scripts/build-packages.mjs](/C:/Users/USUARIO/Documents/Proyectos/Playground/scripts/build-packages.mjs)
 
-That runner is intended to:
+The interactive workspace runner is intended to:
 
-- prompt for `react` or `ts` when no workspace is provided
+- prompt for a single workspace when no workspace is provided
 - allow bypass with `--workspace`
 - support `--help`
-- support `--all`
+- support `--all` where the command allows it
 
-Shared packages are exposed through explicit root aliases such as `build:utils` and `check:utils`.
+`build-packages.mjs` is separate from the interactive runner. It discovers workspaces under
+`packages/` and builds them without a prompt.
+
+Apps can reference shared packages through TypeScript project references for local editor/build
+awareness. Package-wide build flows are implemented in repo scripts so they do not depend on a
+manually maintained package list in `package.json`.
 
 ## Tooling Ownership
 
@@ -52,6 +58,8 @@ Shared packages are exposed through explicit root aliases such as `build:utils` 
   [../.prettierrc.mjs](/C:/Users/USUARIO/Documents/Proyectos/Playground/.prettierrc.mjs)
 - Shared TS base config:
   [../tsconfig.base.json](/C:/Users/USUARIO/Documents/Proyectos/Playground/tsconfig.base.json)
+- Shared Vitest config factory:
+  [../configs/vitest/createVitestConfig.mjs](/C:/Users/USUARIO/Documents/Proyectos/Playground/configs/vitest/createVitestConfig.mjs)
 
 ## Editor And Debugging
 

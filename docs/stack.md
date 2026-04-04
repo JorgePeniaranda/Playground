@@ -69,6 +69,8 @@ This workspace contains:
   [../tsconfig.base.json](/C:/Users/USUARIO/Documents/Proyectos/Playground/tsconfig.base.json)
 - Interactive root command runner:
   [../scripts/run-workspace-command.mjs](/C:/Users/USUARIO/Documents/Proyectos/Playground/scripts/run-workspace-command.mjs)
+- Shared Vitest config helper:
+  [../configs/vitest/createVitestConfig.mjs](/C:/Users/USUARIO/Documents/Proyectos/Playground/configs/vitest/createVitestConfig.mjs)
 
 ## Verification
 
@@ -78,3 +80,5 @@ If you need to know what is really supported, inspect the scripts and configs di
 - per-app commands:
   [../apps/react-playground/package.json](/C:/Users/USUARIO/Documents/Proyectos/Playground/apps/react-playground/package.json)
   [../apps/ts-playground/package.json](/C:/Users/USUARIO/Documents/Proyectos/Playground/apps/ts-playground/package.json)
+- shared package commands:
+  [../packages/utils/package.json](/C:/Users/USUARIO/Documents/Proyectos/Playground/packages/utils/package.json)

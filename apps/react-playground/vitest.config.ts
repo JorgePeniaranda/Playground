@@ -1,7 +1,7 @@
 import react from '@vitejs/plugin-react';
-import { defineConfig } from 'vitest/config';
+import { createVitestConfig } from '../../configs/vitest/createVitestConfig.mjs';
 
-export default defineConfig({
+export default createVitestConfig({
   plugins: [react()],
   test: {
     environment: 'jsdom',

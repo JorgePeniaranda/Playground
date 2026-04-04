@@ -1,13 +1,9 @@
 // @ts-check
 
-/** @import { ChildProcess } from 'node:child_process' */
-
-import { readFile } from 'node:fs/promises';
-import { spawn } from 'node:child_process';
+import path from 'node:path';
 import { stdin as input, stdout as output, stderr } from 'node:process';
 import { clearScreenDown, moveCursor } from 'node:readline';
-import { fileURLToPath } from 'node:url';
-import path from 'node:path';
+import { readJsonFile, repositoryRoot, runNpmCommand } from './workspace-utils.mjs';
 
 /**
  * @typedef {Object} WorkspaceEntry
@@ -57,9 +53,6 @@ const workspaceById = new Map(
   ]),
 );
 
-const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
-const repositoryRoot = path.resolve(scriptDirectory, '..');
-
 function printHelp() {
   output.write(`Usage:
   npm run <command> [-- --workspace <react|ts>]
@@ -95,25 +88,12 @@ function supportsAllWorkspaces(command) {
 }
 
 /**
- * @param {string[]} args
- * @returns {string}
- */
-function formatCommandPreview(args) {
-  return `npm ${args.map((arg) => (/\s/.test(arg) ? JSON.stringify(arg) : arg)).join(' ')}`;
-}
-
-/**
  * @param {WorkspaceEntry} workspace
  * @returns {Promise<Record<string, string>>}
  */
 async function readWorkspaceScripts(workspace) {
   const manifestPath = path.join(repositoryRoot, 'apps', workspace.workspace, 'package.json');
-  const manifestContent = await readFile(manifestPath, 'utf8');
-  const manifest = JSON.parse(manifestContent);
-
-  if (!manifest || typeof manifest !== 'object') {
-    throw new Error(`Invalid package.json for workspace: ${workspace.workspace}`);
-  }
+  const manifest = await readJsonFile(manifestPath);
 
   const { scripts } = manifest;
 
@@ -332,37 +312,6 @@ async function promptForWorkspace(command) {
 }
 
 /**
- * @param {string[]} args
- * @returns {Promise<void>}
- */
-function runNpmCommand(args) {
-  const npmExecutable = process.platform === 'win32' ? 'npm.cmd' : 'npm';
-
-  return new Promise((resolve, reject) => {
-    output.write(`Running: ${formatCommandPreview(args)}\n\n`);
-
-    /** @type {ChildProcess} */
-    const child = spawn(npmExecutable, args, {
-      stdio: 'inherit',
-      shell: process.platform === 'win32',
-    });
-
-    child.on('error', reject);
-    /**
-     * @param {number | null} code
-     */
-    child.on('close', (code) => {
-      if (code === 0) {
-        resolve();
-        return;
-      }
-
-      reject(new Error(`Command failed with exit code ${code ?? 1}`));
-    });
-  });
-}
-
-/**
  * @param {string} command
  * @param {string[]} forwardedArgs
  * @returns {string[]}
@@ -435,7 +384,9 @@ async function main() {
 
   if (parsedArgs.all) {
     await ensureCommandExists(command, workspaceCatalog);
-    await runNpmCommand(createAllWorkspacesArgs(command, parsedArgs.forwardedArgs));
+    await runNpmCommand(createAllWorkspacesArgs(command, parsedArgs.forwardedArgs), {
+      stdout: output,
+    });
     return;
   }
 
@@ -452,6 +403,9 @@ async function main() {
     await ensureCommandExists(command, [selectedWorkspace]);
     await runNpmCommand(
       createSingleWorkspaceArgs(command, selectedWorkspace, parsedArgs.forwardedArgs),
+      {
+        stdout: output,
+      },
     );
     return;
   }
@@ -468,13 +422,18 @@ async function main() {
     }
 
     await ensureCommandExists(command, workspaceCatalog);
-    await runNpmCommand(createAllWorkspacesArgs(command, parsedArgs.forwardedArgs));
+    await runNpmCommand(createAllWorkspacesArgs(command, parsedArgs.forwardedArgs), {
+      stdout: output,
+    });
     return;
   }
 
   await ensureCommandExists(command, [selection.workspace]);
   await runNpmCommand(
     createSingleWorkspaceArgs(command, selection.workspace, parsedArgs.forwardedArgs),
+    {
+      stdout: output,
+    },
   );
 }
 

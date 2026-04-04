@@ -8,6 +8,7 @@
     "composite": true,
     "types": ["node"]
   },
+  "references": [{ "path": "../../packages/utils" }],
   "include": ["index.ts", "src/**/*.ts", "*.config.ts"],
   "exclude": ["node_modules", "out"]
 }
