@@ -7,9 +7,5 @@ const jsdocRecommended = jsdoc.configs['flat/recommended-error'];
 export default defineConfig({
   ...jsdocRecommended,
   files: javascriptFiles,
-  rules: {
-    ...jsdocRecommended.rules,
-    'jsdoc/require-param-description': 'off',
-    'jsdoc/require-returns-description': 'off',
-  },
+  rules: jsdocRecommended.rules,
 });
