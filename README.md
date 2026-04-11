@@ -11,12 +11,12 @@ correr tareas y validar cambios.
 
 ## Workspaces
 
-| Workspace | Id | Rol |
-| --- | --- | --- |
-| `apps/angular-playground` | `angular` | Playground UI en Angular |
-| `apps/react-playground` | `react` | Playground UI en React |
-| `apps/ts-playground` | `ts` | Playground de Node.js y TypeScript |
-| `packages/utils` | `utils` | Helpers compartidos |
+| Workspace                 | Id        | Rol                                |
+| ------------------------- | --------- | ---------------------------------- |
+| `apps/angular-playground` | `angular` | Playground UI en Angular           |
+| `apps/react-playground`   | `react`   | Playground UI en React             |
+| `apps/ts-playground`      | `ts`      | Playground de Node.js y TypeScript |
+| `packages/utils`          | `utils`   | Helpers compartidos                |
 
 ## Requisitos
 

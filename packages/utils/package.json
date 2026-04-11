@@ -22,7 +22,7 @@
   "scripts": {
     "dev": "tsc -p tsconfig.json --watch --preserveWatchOutput",
     "build": "tsc -p tsconfig.json",
-    "clean": "node ../../scripts/clean-workspace.mjs dist coverage tsconfig.tsbuildinfo",
+    "clean": "node ../../cli/features/cleanup/clean-workspace.mjs dist coverage tsconfig.tsbuildinfo",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --ignore-path ../../.prettierignore --write .",

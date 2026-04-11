@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "ng serve",
     "build": "ng build",
-    "clean": "node ../../scripts/clean-workspace.mjs .angular dist out-tsc coverage",
+    "clean": "node ../../cli/features/cleanup/clean-workspace.mjs .angular dist out-tsc coverage",
     "lint": "ng lint",
     "lint:fix": "ng lint --fix",
     "format": "prettier --ignore-path ../../.prettierignore --write .",

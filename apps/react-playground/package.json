@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "vite",
     "build": "npm run typecheck && vite build",
-    "clean": "node ../../scripts/clean-workspace.mjs dist .tsbuild coverage",
+    "clean": "node ../../cli/features/cleanup/clean-workspace.mjs dist .tsbuild coverage",
     "preview": "vite preview",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
