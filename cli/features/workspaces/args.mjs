@@ -6,8 +6,9 @@
  */
 
 /**
- * @param {string[]} argv
- * @returns {ParsedArgs}
+ * Parses workspace-runner CLI arguments after the command name.
+ * @param {string[]} argv The raw argument list received after the workspace command.
+ * @returns {ParsedArgs} The normalized argument state used by the runner.
  */
 export function parseArgs(argv) {
   /** @type {ParsedArgs} */
@@ -68,8 +69,9 @@ export function parseArgs(argv) {
 }
 
 /**
- * @param {WorkspaceEntry[]} workspaceCatalog
- * @returns {Map<string, WorkspaceEntry>}
+ * Creates a case-insensitive lookup map for workspace identifiers and package names.
+ * @param {WorkspaceEntry[]} workspaceCatalog The available workspace entries.
+ * @returns {Map<string, WorkspaceEntry>} A lookup map keyed by workspace id and manifest name.
  */
 export function createWorkspaceLookup(workspaceCatalog) {
   return new Map(
@@ -81,9 +83,10 @@ export function createWorkspaceLookup(workspaceCatalog) {
 }
 
 /**
- * @param {Map<string, WorkspaceEntry>} workspaceById
- * @param {string | undefined} value
- * @returns {WorkspaceEntry | undefined}
+ * Resolves a user-provided workspace token to a catalog entry.
+ * @param {Map<string, WorkspaceEntry>} workspaceById The lookup map built from the workspace catalog.
+ * @param {string | undefined} value The workspace id or package name provided by the user.
+ * @returns {WorkspaceEntry | undefined} The matching workspace entry when one exists.
  */
 export function resolveWorkspace(workspaceById, value) {
   if (!value) {
@@ -94,9 +97,10 @@ export function resolveWorkspace(workspaceById, value) {
 }
 
 /**
- * @param {string} command
- * @param {string[]} forwardedArgs
- * @returns {string[]}
+ * Creates the npm arguments needed to run a command in every workspace.
+ * @param {string} command The npm script name to execute.
+ * @param {string[]} forwardedArgs Additional arguments forwarded to each workspace script.
+ * @returns {string[]} The argument list passed to the npm CLI.
  */
 export function createAllWorkspacesArgs(command, forwardedArgs) {
   return forwardedArgs.length > 0
@@ -105,10 +109,11 @@ export function createAllWorkspacesArgs(command, forwardedArgs) {
 }
 
 /**
- * @param {string} command
- * @param {WorkspaceEntry} workspace
- * @param {string[]} forwardedArgs
- * @returns {string[]}
+ * Creates the npm arguments needed to run a command in a single workspace.
+ * @param {string} command The npm script name to execute.
+ * @param {WorkspaceEntry} workspace The selected workspace entry.
+ * @param {string[]} forwardedArgs Additional arguments forwarded to the workspace script.
+ * @returns {string[]} The argument list passed to the npm CLI.
  */
 export function createSingleWorkspaceArgs(command, workspace, forwardedArgs) {
   return forwardedArgs.length > 0

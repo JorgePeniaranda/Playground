@@ -8,9 +8,10 @@ import { isExecutedAsScript } from '../../shared/runtime.mjs';
 const currentWorkingDirectory = process.cwd();
 
 /**
- * @param {string} baseDirectory
- * @param {string} targetPath
- * @returns {boolean}
+ * Checks whether a resolved path stays inside the expected base directory.
+ * @param {string} baseDirectory The directory that defines the allowed removal boundary.
+ * @param {string} targetPath The resolved artifact path to validate.
+ * @returns {boolean} Returns `true` when the target path is inside the base directory.
  */
 export function isPathInsideDirectory(baseDirectory, targetPath) {
   const relativePath = path.relative(baseDirectory, targetPath);
@@ -19,17 +20,19 @@ export function isPathInsideDirectory(baseDirectory, targetPath) {
 }
 
 /**
- * @param {string} workingDirectory
- * @param {string} artifactPath
- * @returns {string}
+ * Resolves an artifact path relative to the current workspace directory.
+ * @param {string} workingDirectory The workspace directory used as the resolution base.
+ * @param {string} artifactPath The artifact path provided by the caller.
+ * @returns {string} The absolute path for the artifact.
  */
 export function resolveArtifactPath(workingDirectory, artifactPath) {
   return path.resolve(workingDirectory, artifactPath);
 }
 
 /**
- * @param {string[]} removedArtifacts
- * @returns {string}
+ * Builds the user-facing cleanup summary written to standard output.
+ * @param {string[]} removedArtifacts The artifact paths that were successfully removed.
+ * @returns {string} A summary message describing the cleanup result.
  */
 export function createCleanupSummary(removedArtifacts) {
   return removedArtifacts.length > 0
@@ -38,7 +41,8 @@ export function createCleanupSummary(removedArtifacts) {
 }
 
 /**
- * @param {string[]} artifactPaths
+ * Validates that at least one artifact path was provided to the cleanup command.
+ * @param {string[]} artifactPaths The artifact paths requested for removal.
  * @returns {void}
  */
 export function validateArtifactPaths(artifactPaths) {

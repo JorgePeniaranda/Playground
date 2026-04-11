@@ -7,8 +7,9 @@ import { supportedCommands } from './command-registry.mjs';
  */
 
 /**
- * @param {WorkspaceEntry[]} workspaceCatalog
- * @returns {string}
+ * Builds the help output for the workspace command runner.
+ * @param {WorkspaceEntry[]} workspaceCatalog The available workspaces shown in usage examples.
+ * @returns {string} The complete help text displayed to the user.
  */
 export function createHelpText(workspaceCatalog) {
   const workspaceNames = workspaceCatalog.map((entry) => entry.id).join('|');

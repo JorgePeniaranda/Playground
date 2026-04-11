@@ -11,8 +11,9 @@ const baseTestConfig = defineConfig({
 });
 
 /**
- * @param {import('vitest/config').UserConfig} [overrides]
- * @returns {import('vitest/config').UserConfig}
+ * Creates a Vitest configuration by merging the shared defaults with local overrides.
+ * @param {import('vitest/config').UserConfig} [overrides] Workspace-specific Vitest configuration overrides.
+ * @returns {import('vitest/config').UserConfig} The merged Vitest configuration.
  */
 export function createVitestConfig(overrides = {}) {
   return mergeConfig(baseTestConfig, defineConfig(overrides));

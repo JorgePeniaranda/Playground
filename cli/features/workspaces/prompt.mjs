@@ -16,8 +16,9 @@ export const promptEnterKeys = new Set(['\r', '\n']);
 export const promptCancelKey = '\u0003';
 
 /**
- * @param {WorkspaceEntry[]} workspaceCatalog
- * @returns {PromptOption[]}
+ * Maps workspace entries into prompt options for the interactive selector.
+ * @param {WorkspaceEntry[]} workspaceCatalog The available workspace entries.
+ * @returns {PromptOption[]} The prompt options representing each workspace.
  */
 export function createWorkspaceOptions(workspaceCatalog) {
   return workspaceCatalog.map((entry) => ({
@@ -27,9 +28,10 @@ export function createWorkspaceOptions(workspaceCatalog) {
 }
 
 /**
- * @param {string} command
- * @param {WorkspaceEntry[]} workspaceCatalog
- * @returns {PromptOption[]}
+ * Builds the full list of prompt options for a command.
+ * @param {string} command The command the user wants to run.
+ * @param {WorkspaceEntry[]} workspaceCatalog The available workspace entries.
+ * @returns {PromptOption[]} The prompt options shown to the user.
  */
 export function createPromptOptions(command, workspaceCatalog) {
   const workspaceOptions = createWorkspaceOptions(workspaceCatalog);
@@ -42,10 +44,11 @@ export function createPromptOptions(command, workspaceCatalog) {
 }
 
 /**
- * @param {number} currentIndex
- * @param {number} optionsLength
- * @param {'up' | 'down'} direction
- * @returns {number}
+ * Calculates the next selected option index for keyboard navigation.
+ * @param {number} currentIndex The currently selected option index.
+ * @param {number} optionsLength The total number of available options.
+ * @param {'up' | 'down'} direction The navigation direction requested by the user.
+ * @returns {number} The next selected option index, wrapping at the ends.
  */
 export function getNextSelectedIndex(currentIndex, optionsLength, direction) {
   if (direction === 'up') {
@@ -56,8 +59,9 @@ export function getNextSelectedIndex(currentIndex, optionsLength, direction) {
 }
 
 /**
- * @param {string} key
- * @returns {'cancel' | 'submit' | 'up' | 'down' | 'noop'}
+ * Translates a raw keypress into a prompt action.
+ * @param {string} key The raw key sequence read from standard input.
+ * @returns {'cancel' | 'submit' | 'up' | 'down' | 'noop'} The action triggered by the keypress.
  */
 export function parsePromptKey(key) {
   if (key === promptCancelKey) {
@@ -80,9 +84,10 @@ export function parsePromptKey(key) {
 }
 
 /**
- * @param {string} command
- * @param {WorkspaceEntry[]} workspaceCatalog
- * @returns {Promise<WorkspaceSelection>}
+ * Prompts the user to choose a workspace when no explicit selection was provided.
+ * @param {string} command The command the user wants to run.
+ * @param {WorkspaceEntry[]} workspaceCatalog The available workspace entries.
+ * @returns {Promise<WorkspaceSelection>} The workspace selection chosen through the prompt.
  */
 export async function promptForWorkspace(command, workspaceCatalog) {
   if (!input.isTTY || !output.isTTY || typeof input.setRawMode !== 'function') {
@@ -130,7 +135,8 @@ export async function promptForWorkspace(command, workspaceCatalog) {
     };
 
     /**
-     * @param {Buffer} chunk
+     * Handles a chunk of raw terminal input for the interactive prompt.
+     * @param {Buffer} chunk The input bytes emitted by the terminal.
      * @returns {void}
      */
     const onData = (chunk) => {

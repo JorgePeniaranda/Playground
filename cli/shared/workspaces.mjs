@@ -20,8 +20,9 @@ import { readJsonFile } from './json.mjs';
  */
 
 /**
- * @param {string} relativeDirectory
- * @returns {Promise<WorkspaceManifest[]>}
+ * Reads package manifests from a workspace directory such as `apps` or `packages`.
+ * @param {string} relativeDirectory The workspace directory relative to the repository root.
+ * @returns {Promise<WorkspaceManifest[]>} The discovered workspace manifests sorted by name.
  */
 export async function readWorkspaceManifests(relativeDirectory) {
   const directoryPath = path.join(repositoryRoot, relativeDirectory);
@@ -51,9 +52,10 @@ export async function readWorkspaceManifests(relativeDirectory) {
 }
 
 /**
- * @param {WorkspaceManifest} workspaceManifest
- * @param {boolean} requirePlaygroundConfig
- * @returns {Promise<WorkspaceEntry>}
+ * Converts a raw workspace manifest into the normalized catalog shape.
+ * @param {WorkspaceManifest} workspaceManifest The discovered workspace manifest metadata.
+ * @param {boolean} requirePlaygroundConfig Whether playground metadata is required for the workspace.
+ * @returns {Promise<WorkspaceEntry>} The normalized workspace entry.
  */
 async function readWorkspaceEntry(workspaceManifest, requirePlaygroundConfig) {
   const manifest = await readJsonFile(workspaceManifest.manifestPath);
@@ -95,8 +97,9 @@ async function readWorkspaceEntry(workspaceManifest, requirePlaygroundConfig) {
 }
 
 /**
- * @param {{ relativeDirectory: string, requirePlaygroundConfig?: boolean }} options
- * @returns {Promise<WorkspaceEntry[]>}
+ * Reads and normalizes the workspace catalog for a directory.
+ * @param {{ relativeDirectory: string, requirePlaygroundConfig?: boolean }} options The catalog-loading options.
+ * @returns {Promise<WorkspaceEntry[]>} The normalized workspace entries sorted by label.
  */
 export async function readWorkspaceCatalog(options) {
   const { relativeDirectory, requirePlaygroundConfig = false } = options;

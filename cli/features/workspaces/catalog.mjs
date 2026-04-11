@@ -7,8 +7,9 @@ import { readJsonFile } from '../../shared/json.mjs';
  */
 
 /**
- * @param {WorkspaceEntry} workspace
- * @returns {Promise<Record<string, string>>}
+ * Reads the script block from a workspace manifest.
+ * @param {WorkspaceEntry} workspace The workspace whose manifest should be inspected.
+ * @returns {Promise<Record<string, string>>} The manifest scripts keyed by script name.
  */
 export async function readWorkspaceScripts(workspace) {
   const manifest = await readJsonFile(workspace.manifestPath);
@@ -22,8 +23,9 @@ export async function readWorkspaceScripts(workspace) {
 }
 
 /**
- * @param {string} command
- * @param {WorkspaceEntry[]} workspaces
+ * Ensures that every selected workspace defines the requested npm script.
+ * @param {string} command The npm script name that must exist.
+ * @param {WorkspaceEntry[]} workspaces The workspaces that will receive the command.
  * @returns {Promise<void>}
  */
 export async function ensureCommandExists(command, workspaces) {

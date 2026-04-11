@@ -18,7 +18,8 @@ import { createHelpText } from './help.mjs';
 import { promptForWorkspace } from './prompt.mjs';
 
 /**
- * @returns {Promise<import('../../shared/workspaces.mjs').WorkspaceEntry[]>}
+ * Reads and combines app and package workspace metadata for the command runner.
+ * @returns {Promise<import('../../shared/workspaces.mjs').WorkspaceEntry[]>} The merged workspace catalog sorted by label.
  */
 async function readCombinedWorkspaceCatalog() {
   const apps = await readWorkspaceCatalog({

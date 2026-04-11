@@ -3,8 +3,9 @@
 import { readFile } from 'node:fs/promises';
 
 /**
- * @param {string} manifestPath
- * @returns {Promise<Record<string, unknown>>}
+ * Reads and parses a JSON file from disk.
+ * @param {string} manifestPath The absolute path to the JSON file.
+ * @returns {Promise<Record<string, unknown>>} The parsed JSON object.
  */
 export async function readJsonFile(manifestPath) {
   const manifestContent = await readFile(manifestPath, 'utf8');

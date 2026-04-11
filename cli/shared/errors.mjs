@@ -1,16 +1,18 @@
 // @ts-check
 
 /**
- * @param {unknown} error
- * @returns {string}
+ * Converts an unknown error value into a user-facing message.
+ * @param {unknown} error The thrown value to normalize.
+ * @returns {string} The best available error message.
  */
 export function getErrorMessage(error) {
   return error instanceof Error ? error.message : String(error);
 }
 
 /**
- * @param {unknown} error
- * @param {{ stderr?: import('node:stream').Writable, prefix?: string }} [options]
+ * Writes an error message to the configured error stream.
+ * @param {unknown} error The thrown value to report.
+ * @param {{ stderr?: import('node:stream').Writable, prefix?: string }} [options] Optional output settings for the error report.
  * @returns {void}
  */
 export function reportError(error, options = {}) {
@@ -19,8 +21,9 @@ export function reportError(error, options = {}) {
 }
 
 /**
- * @param {unknown} error
- * @param {{ stderr?: import('node:stream').Writable, exitCode?: number, prefix?: string }} [options]
+ * Reports an error and updates the process exit code.
+ * @param {unknown} error The thrown value to report.
+ * @param {{ stderr?: import('node:stream').Writable, exitCode?: number, prefix?: string }} [options] Optional reporting and exit settings.
  * @returns {void}
  */
 export function failWithError(error, options = {}) {

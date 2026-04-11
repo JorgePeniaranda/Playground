@@ -4,18 +4,20 @@ import { spawn } from 'node:child_process';
 import { npmExecutable, repositoryRoot } from './constants.mjs';
 
 /**
- * @param {string} command
- * @param {string[]} args
- * @returns {string}
+ * Formats a command preview for logging.
+ * @param {string} command The executable that will be spawned.
+ * @param {string[]} args The argument list passed to the executable.
+ * @returns {string} A shell-like preview string for the command.
  */
 export function formatCommandPreview(command, args) {
   return [command, ...args].map((arg) => (/\s/.test(arg) ? JSON.stringify(arg) : arg)).join(' ');
 }
 
 /**
- * @param {string} command
- * @param {string[]} args
- * @param {{ cwd?: string, stdout?: import('node:stream').Writable }} [options]
+ * Spawns a child process and waits for it to finish.
+ * @param {string} command The executable that will be spawned.
+ * @param {string[]} args The argument list passed to the executable.
+ * @param {{ cwd?: string, stdout?: import('node:stream').Writable }} [options] Optional working-directory and logging settings.
  * @returns {Promise<void>}
  */
 export function runCommand(command, args, options = {}) {
@@ -35,7 +37,12 @@ export function runCommand(command, args, options = {}) {
     child.on('error', reject);
     child.on(
       'close',
-      /** @param {number | null} code */ (code) => {
+      /**
+       * Handles the child-process exit event.
+       * @param {number | null} code The exit code reported by the child process.
+       * @returns {void}
+       */
+      (code) => {
         if (code === 0) {
           resolve();
           return;
@@ -48,8 +55,9 @@ export function runCommand(command, args, options = {}) {
 }
 
 /**
- * @param {string[]} args
- * @param {{ cwd?: string, stdout?: import('node:stream').Writable }} [options]
+ * Runs the npm executable with the provided argument list.
+ * @param {string[]} args The arguments passed to npm.
+ * @param {{ cwd?: string, stdout?: import('node:stream').Writable }} [options] Optional working-directory and logging settings.
  * @returns {Promise<void>}
  */
 export function runNpmCommand(args, options = {}) {
