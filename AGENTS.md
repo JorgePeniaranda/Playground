@@ -24,7 +24,7 @@ If you need project details, read the relevant file instead of trusting this doc
 - Prettier ignore rules:
   [.prettierignore](/C:/Users/USUARIO/Documents/Proyectos/Playground/.prettierignore)
 - Root workspace command runner:
-  [scripts/run-workspace-command.mjs](/C:/Users/USUARIO/Documents/Proyectos/Playground/scripts/run-workspace-command.mjs)
+  [cli/features/workspaces/run-command.mjs](/C:/Users/USUARIO/Documents/Proyectos/Playground/cli/features/workspaces/run-command.mjs)
 - Node version expectation: [.nvmrc](/C:/Users/USUARIO/Documents/Proyectos/Playground/.nvmrc)
 - Editor defaults: [.editorconfig](/C:/Users/USUARIO/Documents/Proyectos/Playground/.editorconfig)
 - VS Code launch/debug setup:

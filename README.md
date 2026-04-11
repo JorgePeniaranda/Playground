@@ -1,45 +1,49 @@
 # Playground
 
-Monorepo de experimentacion para probar ideas en Angular, React y TypeScript compartiendo tooling,
-scripts raiz y un paquete utilitario comun.
+Monorepo de experimentacion para comparar y mantener playgrounds de Angular, React y TypeScript
+con tooling compartido, comandos raiz consistentes y un paquete utilitario comun.
 
-## Que Incluye
+## Panorama
 
-| Workspace                 | Id del runner | Proposito                 | Stack principal                                      |
-| ------------------------- | ------------- | ------------------------- | ---------------------------------------------------- |
-| `apps/angular-playground` | `angular`     | Playground UI con Angular | Angular 21, TypeScript, Tailwind CSS 4, Vitest       |
-| `apps/react-playground`   | `react`       | Playground UI con React   | React 19, Vite 8, TypeScript, Tailwind CSS 4, Vitest |
-| `apps/ts-playground`      | `ts`          | Playground para Node.js   | TypeScript, Node.js, nodemon, ts-node, Vitest        |
-| `packages/utils`          | `utils`       | Utilidades compartidas    | TypeScript, build con `tsc`, Vitest                  |
+El repo agrupa playgrounds de interfaz y de TypeScript bajo una misma capa de tooling. La idea es
+que cada workspace mantenga sus scripts y su stack, mientras el root ofrece una forma uniforme de
+correr tareas y validar cambios.
+
+## Workspaces
+
+| Workspace | Id | Rol |
+| --- | --- | --- |
+| `apps/angular-playground` | `angular` | Playground UI en Angular |
+| `apps/react-playground` | `react` | Playground UI en React |
+| `apps/ts-playground` | `ts` | Playground de Node.js y TypeScript |
+| `packages/utils` | `utils` | Helpers compartidos |
 
 ## Requisitos
 
 - Node.js `20.19.0` o superior
 - npm `10` o superior
 
-## Puesta En Marcha
+## Inicio Rapido
 
 ```sh
 npm install
-```
-
-Levantar un workspace en modo interactivo:
-
-```sh
 npm run dev
 ```
 
-Levantar uno puntual sin prompt:
+Ejemplos utiles:
 
 ```sh
 npm run dev -- react
 npm run dev -- angular
 npm run dev -- ts
+npm run check -- react
+npm run check:all
 ```
 
-## Comandos Del Root
+## Comandos
 
-El root expone un set corto de comandos y delega en `scripts/run-workspace-command.mjs`.
+Los comandos raiz delegan en `cli/features/workspaces/run-command.mjs` y mantienen una interfaz
+comun.
 
 ```sh
 npm run dev
@@ -47,41 +51,29 @@ npm run build
 npm run clean
 npm run lint
 npm run format
+npm run format:check
 npm run typecheck
 npm run test
+npm run test:coverage
 npm run check
 ```
 
-Tambien puedes ejecutar sobre un workspace concreto:
-
-```sh
-npm run build -- ts
-npm run test -- react
-npm run check -- utils
-npm run lint -- --workspace angular
-```
-
-Y para correr todo el repo cuando aplica:
+Versiones repo-wide cuando aplican:
 
 ```sh
 npm run build:all
 npm run clean:all
 npm run lint:all
+npm run lint:fix:all
+npm run format:all
 npm run format:check:all
 npm run typecheck:all
 npm run test:all
+npm run test:coverage:all
 npm run check:all
 ```
 
-## Flujo Recomendado
-
-1. Instalar dependencias con `npm install`.
-2. Arrancar el workspace que quieras explorar con `npm run dev -- <id>`.
-3. Validar cambios con `npm run check -- <id>` o `npm run check:all`.
-4. Si modificas utilidades compartidas, usar `npm run build:packages` antes de verificar apps que las
-   consumen.
-
-## Estructura Del Repo
+## Estructura
 
 ```text
 apps/
@@ -94,15 +86,20 @@ configs/
   eslint/
   vitest/
 docs/
-scripts/
+cli/
 ```
 
-## Documentacion
+## Referencias
 
-- Vista general de arquitectura:
-  [docs/architecture.md](/C:/Users/USUARIO/Documents/Proyectos/Playground/docs/architecture.md)
-- Stack y tooling por workspace:
-  [docs/stack.md](/C:/Users/USUARIO/Documents/Proyectos/Playground/docs/stack.md)
+- [cli/README.md](/C:/Users/USUARIO/Documents/Proyectos/Playground/cli/README.md)
+- [docs/README.md](/C:/Users/USUARIO/Documents/Proyectos/Playground/docs/README.md)
+- [docs/architecture.md](/C:/Users/USUARIO/Documents/Proyectos/Playground/docs/architecture.md)
+- [docs/stack.md](/C:/Users/USUARIO/Documents/Proyectos/Playground/docs/stack.md)
+- [package.json](/C:/Users/USUARIO/Documents/Proyectos/Playground/package.json)
+- [apps/angular-playground/package.json](/C:/Users/USUARIO/Documents/Proyectos/Playground/apps/angular-playground/package.json)
+- [apps/react-playground/package.json](/C:/Users/USUARIO/Documents/Proyectos/Playground/apps/react-playground/package.json)
+- [apps/ts-playground/package.json](/C:/Users/USUARIO/Documents/Proyectos/Playground/apps/ts-playground/package.json)
+- [packages/utils/package.json](/C:/Users/USUARIO/Documents/Proyectos/Playground/packages/utils/package.json)
 
 ## Licencia
 

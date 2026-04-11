@@ -1,107 +1,61 @@
 # Architecture
 
-This repository is a small monorepo for experiments, comparisons and reusable setup across
-multiple frontend and TypeScript workspaces.
+Este repo es un monorepo pequeño para experimentar con varios playgrounds manteniendo una capa de
+tooling compartida y una forma uniforme de correr tareas.
 
-## Layout
+## Vista Rapida
 
-Primary directories:
+- `apps/`: aplicaciones y playgrounds ejecutables
+- `packages/`: codigo reutilizable compartido
+- `configs/`: configuracion comun de herramientas
+- `cli/`: utilidades CLI organizadas por feature
+- `docs/`: contexto estable y de alto nivel
 
-- [../apps/angular-playground](/C:/Users/USUARIO/Documents/Proyectos/Playground/apps/angular-playground)
-- [../apps/react-playground](/C:/Users/USUARIO/Documents/Proyectos/Playground/apps/react-playground)
-- [../apps/ts-playground](/C:/Users/USUARIO/Documents/Proyectos/Playground/apps/ts-playground)
-- [../packages/utils](/C:/Users/USUARIO/Documents/Proyectos/Playground/packages/utils)
-- [../configs/eslint](/C:/Users/USUARIO/Documents/Proyectos/Playground/configs/eslint)
-- [../configs/vitest](/C:/Users/USUARIO/Documents/Proyectos/Playground/configs/vitest)
-- [../scripts](/C:/Users/USUARIO/Documents/Proyectos/Playground/scripts)
-- [../docs](/C:/Users/USUARIO/Documents/Proyectos/Playground/docs)
-- [../.vscode](/C:/Users/USUARIO/Documents/Proyectos/Playground/.vscode)
+## Modelo Del Monorepo
 
-## Monorepo Model
+- El root define workspaces en `apps/*` y `packages/*`.
+- Cada workspace es responsable de sus scripts de runtime, build, test y lint.
+- El root expone una interfaz comun para operar uno o varios workspaces.
+- La configuracion compartida vive en el root o en `configs/`.
 
-- The root [../package.json](/C:/Users/USUARIO/Documents/Proyectos/Playground/package.json)
-  defines workspaces under `apps/*` and `packages/*`.
-- Application workspaces own their runtime, build and test scripts.
-- Shared packages provide reusable code for apps and other workspaces.
-- Cross-workspace orchestration lives in repo scripts instead of duplicated root aliases.
-- Shared linting, formatting and base TypeScript settings are centralized at the root.
+## Workspaces
 
-## Workspace Relationships
+- `apps/angular-playground`: playground UI de Angular
+- `apps/react-playground`: playground UI de React con Vite
+- `apps/ts-playground`: playground orientado a Node.js y TypeScript
+- `packages/utils`: helpers compartidos consumidos por otros workspaces
 
-- `apps/angular-playground` is an Angular application.
-- `apps/react-playground` is a React + Vite application.
-- `apps/ts-playground` is a Node-oriented TypeScript application.
-- `packages/utils` is a reusable TypeScript package consumed by the apps.
+Para detalles exactos de dependencias, scripts o project references, revisa el `package.json` y el
+`tsconfig.json` del workspace correspondiente.
 
-Applications that depend on shared packages use TypeScript project references for local editor and
-build awareness. The actual dependency shape should always be confirmed in the workspace
-`tsconfig.json` and `package.json` files.
+## Capas De Comandos
 
-## Command Architecture
+Hay dos niveles de comandos:
 
-There are two command layers:
+1. Scripts locales definidos por cada workspace
+2. Comandos raiz que delegan en uno o varios workspaces
 
-1. Workspace-local scripts defined in each workspace `package.json`
-2. Root commands that dispatch to one or many workspaces
+El punto de entrada principal del runner es
+[../cli/features/workspaces/run-command.mjs](/C:/Users/USUARIO/Documents/Proyectos/Playground/cli/features/workspaces/run-command.mjs).
 
-Root command orchestration lives in:
+El runner:
 
-- [../scripts/run-workspace-command.mjs](/C:/Users/USUARIO/Documents/Proyectos/Playground/scripts/run-workspace-command.mjs)
-- [../scripts/build-packages.mjs](/C:/Users/USUARIO/Documents/Proyectos/Playground/scripts/build-packages.mjs)
+- descubre workspaces desde sus manifests
+- soporta seleccion interactiva, `--workspace`, argumento posicional y `--all`
+- usa `playgroundConfig.id` y `playgroundConfig.label` cuando existen
+- mantiene una interfaz uniforme para `dev`, `build`, `lint`, `test`, `check` y comandos similares
 
-The shared runner is responsible for:
+## Tooling Compartido
 
-- prompting for a workspace when no target is provided
-- supporting `--workspace`, positional workspace ids and `--all`
-- exposing `--help`
-- discovering workspaces from `apps/*/package.json` and `packages/*/package.json`
-- using `playgroundConfig.id` and `playgroundConfig.label` when present
-
-Examples:
-
-- `npm run dev -- react`
-- `npm run build -- ts`
-- `npm run check -- utils`
-- `npm run test -- --all`
-
-`build-packages.mjs` stays separate because package compilation is a repo-level concern that may
-need to run before app workflows.
-
-## Tooling Ownership
-
-- ESLint assembly entrypoint:
+- Scripts y comandos raiz:
+  [../package.json](/C:/Users/USUARIO/Documents/Proyectos/Playground/package.json)
+- ESLint:
   [../eslint.config.mjs](/C:/Users/USUARIO/Documents/Proyectos/Playground/eslint.config.mjs)
-- ESLint modules:
-  [../configs/eslint](/C:/Users/USUARIO/Documents/Proyectos/Playground/configs/eslint)
-- Prettier config:
-  [../.prettierrc.mjs](/C:/Users/USUARIO/Documents/Proyectos/Playground/.prettierrc.mjs)
-- Shared TS base config:
+  [../configs/eslint/index.mjs](/C:/Users/USUARIO/Documents/Proyectos/Playground/configs/eslint/index.mjs)
+- TypeScript base:
   [../tsconfig.base.json](/C:/Users/USUARIO/Documents/Proyectos/Playground/tsconfig.base.json)
-- Shared Vitest config factory:
+- Vitest compartido:
   [../configs/vitest/createVitestConfig.mjs](/C:/Users/USUARIO/Documents/Proyectos/Playground/configs/vitest/createVitestConfig.mjs)
-
-## Editor And Debugging
-
-- Editor defaults:
-  [../.editorconfig](/C:/Users/USUARIO/Documents/Proyectos/Playground/.editorconfig)
-- Node version pin:
-  [../.nvmrc](/C:/Users/USUARIO/Documents/Proyectos/Playground/.nvmrc)
-- VS Code debug config:
-  [../.vscode/launch.json](/C:/Users/USUARIO/Documents/Proyectos/Playground/.vscode/launch.json)
-- VS Code background tasks:
-  [../.vscode/tasks.json](/C:/Users/USUARIO/Documents/Proyectos/Playground/.vscode/tasks.json)
-- VS Code recommended extensions:
-  [../.vscode/extensions.json](/C:/Users/USUARIO/Documents/Proyectos/Playground/.vscode/extensions.json)
-- VS Code MCP servers:
-  [../.vscode/mcp.json](/C:/Users/USUARIO/Documents/Proyectos/Playground/.vscode/mcp.json)
-
-## Documentation Rule
-
-Keep architectural explanations here, but avoid duplicating volatile values already owned by config
-files.
-
-Examples:
-
-- For exact dependency versions, read the relevant `package.json`.
-- For Node version, read `.nvmrc`.
-- For supported root commands, read the root `package.json`.
+- Formato:
+  [../.prettierrc.mjs](/C:/Users/USUARIO/Documents/Proyectos/Playground/.prettierrc.mjs)
+  [../.prettierignore](/C:/Users/USUARIO/Documents/Proyectos/Playground/.prettierignore)
