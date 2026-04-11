@@ -21,6 +21,9 @@ export function createBuildPackageMessage(workspaceName) {
   return `\nBuilding package: ${workspaceName}\n`;
 }
 
+/**
+ * @returns {Promise<void>}
+ */
 export async function main() {
   const packages = await readWorkspaceManifests('packages');
 

@@ -10,6 +10,10 @@ const baseTestConfig = defineConfig({
   },
 });
 
+/**
+ * @param {import('vitest/config').UserConfig} [overrides]
+ * @returns {import('vitest/config').UserConfig}
+ */
 export function createVitestConfig(overrides = {}) {
   return mergeConfig(baseTestConfig, defineConfig(overrides));
 }

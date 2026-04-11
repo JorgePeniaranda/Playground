@@ -30,6 +30,9 @@ async function readCombinedWorkspaceCatalog() {
   return [...apps, ...packages].sort((left, right) => left.label.localeCompare(right.label));
 }
 
+/**
+ * @returns {Promise<void>}
+ */
 export async function main() {
   const command = process.argv[2];
   const workspaceCatalog = await readCombinedWorkspaceCatalog();

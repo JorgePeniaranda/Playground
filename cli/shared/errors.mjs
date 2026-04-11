@@ -10,7 +10,7 @@ export function getErrorMessage(error) {
 
 /**
  * @param {unknown} error
- * @param {{ stderr?: NodeJS.WritableStream, prefix?: string }} [options]
+ * @param {{ stderr?: import('node:stream').Writable, prefix?: string }} [options]
  * @returns {void}
  */
 export function reportError(error, options = {}) {
@@ -20,7 +20,7 @@ export function reportError(error, options = {}) {
 
 /**
  * @param {unknown} error
- * @param {{ stderr?: NodeJS.WritableStream, exitCode?: number, prefix?: string }} [options]
+ * @param {{ stderr?: import('node:stream').Writable, exitCode?: number, prefix?: string }} [options]
  * @returns {void}
  */
 export function failWithError(error, options = {}) {

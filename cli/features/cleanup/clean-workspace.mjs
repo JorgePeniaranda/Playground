@@ -47,6 +47,9 @@ export function validateArtifactPaths(artifactPaths) {
   }
 }
 
+/**
+ * @returns {Promise<void>}
+ */
 export async function main() {
   const artifactPaths = process.argv.slice(2);
 

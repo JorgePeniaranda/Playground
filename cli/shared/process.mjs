@@ -15,7 +15,7 @@ export function formatCommandPreview(command, args) {
 /**
  * @param {string} command
  * @param {string[]} args
- * @param {{ cwd?: string, stdout?: NodeJS.WritableStream }} [options]
+ * @param {{ cwd?: string, stdout?: import('node:stream').Writable }} [options]
  * @returns {Promise<void>}
  */
 export function runCommand(command, args, options = {}) {
@@ -49,7 +49,7 @@ export function runCommand(command, args, options = {}) {
 
 /**
  * @param {string[]} args
- * @param {{ cwd?: string, stdout?: NodeJS.WritableStream }} [options]
+ * @param {{ cwd?: string, stdout?: import('node:stream').Writable }} [options]
  * @returns {Promise<void>}
  */
 export function runNpmCommand(args, options = {}) {
