@@ -36,7 +36,7 @@ Hay dos niveles de comandos:
 2. Comandos raiz que delegan en uno o varios workspaces
 
 El punto de entrada principal del runner es
-[../cli/features/workspaces/run-command.mjs](/C:/Users/USUARIO/Documents/Proyectos/Playground/cli/features/workspaces/run-command.mjs).
+[../cli/features/workspaces/run-command.mjs](../cli/features/workspaces/run-command.mjs).
 
 El runner:
 
@@ -48,14 +48,14 @@ El runner:
 ## Tooling Compartido
 
 - Scripts y comandos raiz:
-  [../package.json](/C:/Users/USUARIO/Documents/Proyectos/Playground/package.json)
+  [../package.json](../package.json)
 - ESLint:
-  [../eslint.config.mjs](/C:/Users/USUARIO/Documents/Proyectos/Playground/eslint.config.mjs)
-  [../configs/eslint/index.mjs](/C:/Users/USUARIO/Documents/Proyectos/Playground/configs/eslint/index.mjs)
+  [../eslint.config.mjs](../eslint.config.mjs)
+  [../configs/eslint/index.mjs](../configs/eslint/index.mjs)
 - TypeScript base:
-  [../tsconfig.base.json](/C:/Users/USUARIO/Documents/Proyectos/Playground/tsconfig.base.json)
+  [../tsconfig.base.json](../tsconfig.base.json)
 - Vitest compartido:
-  [../configs/vitest/createVitestConfig.mjs](/C:/Users/USUARIO/Documents/Proyectos/Playground/configs/vitest/createVitestConfig.mjs)
+  [../configs/vitest/createVitestConfig.mjs](../configs/vitest/createVitestConfig.mjs)
 - Formato:
-  [../.prettierrc.mjs](/C:/Users/USUARIO/Documents/Proyectos/Playground/.prettierrc.mjs)
-  [../.prettierignore](/C:/Users/USUARIO/Documents/Proyectos/Playground/.prettierignore)
+  [../.prettierrc.mjs](../.prettierrc.mjs)
+  [../.prettierignore](../.prettierignore)

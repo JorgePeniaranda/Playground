@@ -91,17 +91,15 @@ cli/
 
 ## Referencias
 
-- [cli/README.md](/C:/Users/USUARIO/Documents/Proyectos/Playground/cli/README.md)
-- [docs/README.md](/C:/Users/USUARIO/Documents/Proyectos/Playground/docs/README.md)
-- [docs/architecture.md](/C:/Users/USUARIO/Documents/Proyectos/Playground/docs/architecture.md)
-- [docs/stack.md](/C:/Users/USUARIO/Documents/Proyectos/Playground/docs/stack.md)
-- [package.json](/C:/Users/USUARIO/Documents/Proyectos/Playground/package.json)
-- [apps/angular-playground/package.json](/C:/Users/USUARIO/Documents/Proyectos/Playground/apps/angular-playground/package.json)
-- [apps/react-playground/package.json](/C:/Users/USUARIO/Documents/Proyectos/Playground/apps/react-playground/package.json)
-- [apps/ts-playground/package.json](/C:/Users/USUARIO/Documents/Proyectos/Playground/apps/ts-playground/package.json)
-- [packages/utils/package.json](/C:/Users/USUARIO/Documents/Proyectos/Playground/packages/utils/package.json)
+- [docs/architecture.md](docs/architecture.md)
+- [docs/stack.md](docs/stack.md)
+- [package.json](package.json)
+- [apps/angular-playground/package.json](apps/angular-playground/package.json)
+- [apps/react-playground/package.json](apps/react-playground/package.json)
+- [apps/ts-playground/package.json](apps/ts-playground/package.json)
+- [packages/utils/package.json](packages/utils/package.json)
 
 ## Licencia
 
 Este proyecto se distribuye bajo licencia MIT. El texto completo esta en
-[LICENSE](/C:/Users/USUARIO/Documents/Proyectos/Playground/LICENSE).
+[LICENSE](LICENSE).

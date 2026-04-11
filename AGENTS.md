@@ -7,29 +7,29 @@ If you need project details, read the relevant file instead of trusting this doc
 ## Start Here
 
 - Repo overview and technical layout:
-  [docs/architecture.md](/C:/Users/USUARIO/Documents/Proyectos/Playground/docs/architecture.md)
-- Tooling and stack: [docs/stack.md](/C:/Users/USUARIO/Documents/Proyectos/Playground/docs/stack.md)
+  [docs/architecture.md](docs/architecture.md)
+- Tooling and stack: [docs/stack.md](docs/stack.md)
 
 ## Source Of Truth
 
 - Root scripts and workspace orchestration:
-  [package.json](/C:/Users/USUARIO/Documents/Proyectos/Playground/package.json)
+  [package.json](package.json)
 - Workspace manifests:
-  [apps/react-playground/package.json](/C:/Users/USUARIO/Documents/Proyectos/Playground/apps/react-playground/package.json)
-  [apps/ts-playground/package.json](/C:/Users/USUARIO/Documents/Proyectos/Playground/apps/ts-playground/package.json)
+  [apps/react-playground/package.json](apps/react-playground/package.json)
+  [apps/ts-playground/package.json](apps/ts-playground/package.json)
 - Shared ESLint config:
-  [configs/eslint/index.mjs](/C:/Users/USUARIO/Documents/Proyectos/Playground/configs/eslint/index.mjs)
+  [configs/eslint/index.mjs](configs/eslint/index.mjs)
 - Shared Prettier config:
-  [.prettierrc.mjs](/C:/Users/USUARIO/Documents/Proyectos/Playground/.prettierrc.mjs)
+  [.prettierrc.mjs](.prettierrc.mjs)
 - Prettier ignore rules:
-  [.prettierignore](/C:/Users/USUARIO/Documents/Proyectos/Playground/.prettierignore)
+  [.prettierignore](.prettierignore)
 - Root workspace command runner:
-  [cli/features/workspaces/run-command.mjs](/C:/Users/USUARIO/Documents/Proyectos/Playground/cli/features/workspaces/run-command.mjs)
-- Node version expectation: [.nvmrc](/C:/Users/USUARIO/Documents/Proyectos/Playground/.nvmrc)
-- Editor defaults: [.editorconfig](/C:/Users/USUARIO/Documents/Proyectos/Playground/.editorconfig)
+  [cli/features/workspaces/run-command.mjs](cli/features/workspaces/run-command.mjs)
+- Node version expectation: [.nvmrc](.nvmrc)
+- Editor defaults: [.editorconfig](.editorconfig)
 - VS Code launch/debug setup:
-  [.vscode/launch.json](/C:/Users/USUARIO/Documents/Proyectos/Playground/.vscode/launch.json)
-  [.vscode/tasks.json](/C:/Users/USUARIO/Documents/Proyectos/Playground/.vscode/tasks.json)
+  [.vscode/launch.json](.vscode/launch.json)
+  [.vscode/tasks.json](.vscode/tasks.json)
 
 ## Working Rules
 
