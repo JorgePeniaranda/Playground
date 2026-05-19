@@ -9,6 +9,6 @@
     "types": ["node"]
   },
   "references": [{ "path": "../../packages/utils" }],
-  "include": ["index.ts", "src/**/*.ts", "*.config.ts"],
+  "include": ["index.ts", "src/**/*.ts", "*.config.ts", "src/**/*.json"],
   "exclude": ["node_modules", "out"]
 }
